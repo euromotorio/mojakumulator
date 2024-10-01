@@ -1,0 +1,43 @@
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 80vw;
+	margin: 2rem 5rem;
+
+	& .delete {
+		width: 1em;
+		text-align: center;
+	}
+}
+
+td,
+th {
+	border: 1px solid rgb(112, 112, 112);
+	text-align: left;
+	padding: 8px;
+	background-color: white;
+	padding: 1rem;
+	max-height: 100%;
+}
+
+th {
+	background-color: #dddddd;
+}
+
+.add-new-user {
+	text-align: center;
+	font-size: 2em;
+	padding: 0;
+	transition: all 250ms;
+	user-select: none;
+
+	&:hover {
+		font-weight: bold;
+		cursor: pointer;
+		transition: all 250ms;
+	}
+
+	&:active {
+		font-weight: normal;
+	}
+}

@@ -1,0 +1,26 @@
+.user-item {
+	transition: all 200ms;
+
+	&:hover {
+		cursor: pointer;
+		font-weight: bold;
+		transition: all 200ms;
+	}
+
+	&:active {
+		font-weight: normal;
+		transition: all 200ms;
+	}
+}
+
+.delete-icon {
+	color: red;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&:active {
+		color: rgba(255, 0, 0, 0.622);
+	}
+}

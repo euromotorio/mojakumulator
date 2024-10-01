@@ -1,0 +1,8 @@
+.layout {
+	display: flex;
+	flex-direction: row;
+}
+
+.outlet {
+	width: calc(100% - 240px);
+}

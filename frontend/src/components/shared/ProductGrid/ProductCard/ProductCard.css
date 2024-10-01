@@ -1,0 +1,38 @@
+.card {
+	background-color: white;
+	border-radius: 0.4rem;
+	padding: 2rem;
+	width: 250px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 350px;
+	margin: 2rem 0 0 0;
+
+	& b {
+		color: #103178;
+		font-weight: normal;
+		font-size: 1.2em;
+	}
+
+	& hr {
+		width: 100%;
+	}
+
+	/* & button {
+		width: 100%;
+		background-color: #ffc801;
+		transition: all 300ms;
+		margin: 1rem 0 0 0;
+
+		&:hover {
+			background-color: #103178;
+			color: white;
+			transition: all 300ms;
+		}
+
+		&:active {
+			background-color: #103178e3;
+		}
+	} */
+}

@@ -1,0 +1,30 @@
+.checkout-form {
+	height: 500px;
+	max-height: 500px;
+	background-color: white;
+	padding: 1rem 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	& hr {
+		width: 100%;
+	}
+
+	& .name {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+
+		& div {
+			width: 100%;
+		}
+	}
+}
+
+.input-fields {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: space-evenly;
+}

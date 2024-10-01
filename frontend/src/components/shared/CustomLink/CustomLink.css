@@ -1,0 +1,24 @@
+.link.active {
+	background-color: #ffc801;
+	color: #002300;
+	transition: all 200ms;
+}
+
+.link {
+	padding: 0.5rem 3.5rem;
+	border-radius: 0.3rem;
+	color: #002300;
+	transition: all 200ms;
+	margin: 0.5rem 0;
+	width: 3rem;
+
+	&:hover {
+		color: white;
+		background-color: #103178;
+		transition: all 200ms;
+	}
+
+	&:active {
+		background-color: #103178e3;
+	}
+}

@@ -1,0 +1,26 @@
+.sidebar-header {
+	width: 150px;
+	display: flex;
+	flex-direction: column;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: calc(100vh - 100px - 2rem);
+	background-color: white;
+	padding: 1rem 1.5rem;
+	border-right: 1px rgba(94, 94, 94, 0.674) solid;
+	align-items: center;
+}
+
+.sidebar-footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	& a {
+		color: rgba(68, 68, 68, 0.557);
+		margin: 0.5rem 0;
+	}
+}
