@@ -20,7 +20,7 @@ app.use("/api/users", userRouter);
 
 app.use(errorHandler);
 
-const PORT = 3000;
+const PORT = process.env.PORT | 3000;
 
 mongoose.connect(MONGODB_URI!).then((db) => {
 	app.listen(PORT, () => {
