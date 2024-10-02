@@ -24,6 +24,7 @@ body {
 	margin: 0;
 	background-color: rgb(200, 200, 200);
 	color: black;
+	overflow: hidden;
 }
 
 h1 {
