@@ -10,6 +10,11 @@ import {
 const SideBar: FC = () => {
 	const { user, logout } = useContext<UserContextType>(UserContext);
 
+	const logoutHandler = () => {
+		localStorage.removeItem("user");
+		logout();
+	};
+
 	return (
 		<div className="sidebar">
 			<div className="sidebar-header">
@@ -20,7 +25,7 @@ const SideBar: FC = () => {
 				{user?.access === "admin" && (
 					<Link to="/admin/korisnici">Korisnici</Link>
 				)}
-				<Link to="/login" onClick={() => logout()}>
+				<Link to="/login" onClick={logoutHandler}>
 					Odjava
 				</Link>
 			</div>
