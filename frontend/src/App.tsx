@@ -20,9 +20,14 @@ import Login from "./pages/Login/Login";
 import Users from "./pages/Users/Users";
 import { userLoader } from "./util/loaders/userLoader";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
+import {
+	NotificationContext,
+	NotificationContextType
+} from "./util/context/NotificationContext";
 
 const Layout: FC = () => {
 	const { user, login } = useContext<UserContextType>(UserContext);
+	const { message } = useContext<NotificationContextType>(NotificationContext);
 
 	const redirect = useNavigate();
 
@@ -40,6 +45,7 @@ const Layout: FC = () => {
 			{user && <NavBar />}
 			<div className="layout">
 				{user && <SideBar />}
+				<div className="notification">{message}</div>
 				<div className="outlet">
 					<Outlet />
 				</div>
@@ -73,6 +79,7 @@ const App: FC = () => {
 	);
 
 	const [user, setUser] = useState<User | undefined>();
+	const [message, setMessage] = useState<string>("");
 
 	const loginHandler = (userParam: User) => {
 		setUser(userParam);
@@ -82,11 +89,23 @@ const App: FC = () => {
 		setUser(undefined);
 	};
 
+	const notificationMessageHandler = (incomingMessage: string) => {
+		setMessage(incomingMessage);
+
+		setTimeout(() => {
+			setMessage("");
+		}, 2000);
+	};
+
 	return (
 		<UserContext.Provider
 			value={{ user, login: loginHandler, logout: logoutHandler }}
 		>
-			<RouterProvider router={router} />
+			<NotificationContext.Provider
+				value={{ message, setMessage: notificationMessageHandler }}
+			>
+				<RouterProvider router={router} />
+			</NotificationContext.Provider>
 		</UserContext.Provider>
 	);
 };

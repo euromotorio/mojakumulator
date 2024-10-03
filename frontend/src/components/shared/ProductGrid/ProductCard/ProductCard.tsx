@@ -6,6 +6,10 @@ import {
 	UserContextType
 } from "../../../../util/context/UserContext";
 import { baseApiUrl } from "../../../../util/config/baseApiUrl";
+// import {
+// 	NotificationContext,
+// 	NotificationContextType
+// } from "../../../../util/context/NotificationContext";
 
 interface ProductCardProps {
 	product: Product;
@@ -13,15 +17,27 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
 	const { user } = useContext<UserContextType>(UserContext);
+	// const { setMessage } =
+	// 	useContext<NotificationContextType>(NotificationContext);
 
 	const addToCartHandler = async () => {
-		await fetch(`${baseApiUrl}/users/cart/add/${product.id}`, {
-			method: "PUT",
-			headers: {
-				Authorization: `bearer ${user?.token}`
-			}
-		});
+		try {
+			const response = await fetch(
+				`${baseApiUrl}/users/cart/add/${product.id}`,
+				{
+					method: "PUT",
+					headers: {
+						Authorization: `bearer ${user?.token}`
+					}
+				}
+			);
+
+			console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
 	};
+
 	return (
 		<div className="card">
 			<div>

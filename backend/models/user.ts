@@ -1,7 +1,25 @@
 import mongoose from "mongoose";
-import { User as UserType } from "../util/types";
+import { Address, User as UserType } from "../util/types";
 
 export interface UserInterface extends UserType, mongoose.Document {}
+
+const addressSchema = new mongoose.Schema<Address>({
+	street: {
+		type: String,
+		required: true,
+		trim: true
+	},
+	city: {
+		type: String,
+		required: true,
+		trim: true
+	},
+	zipCode: {
+		type: String,
+		required: true,
+		trim: true
+	}
+});
 
 const userSchema = new mongoose.Schema<UserInterface>({
 	name: {
@@ -29,7 +47,21 @@ const userSchema = new mongoose.Schema<UserInterface>({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Aku"
 		}
-	]
+	],
+	fullName: {
+		type: String,
+		required: true,
+		trim: true
+	},
+	address: {
+		type: addressSchema,
+		required: true
+	},
+	phone: {
+		type: Number,
+		required: true,
+		trim: true
+	}
 });
 
 userSchema.set("toJSON", {

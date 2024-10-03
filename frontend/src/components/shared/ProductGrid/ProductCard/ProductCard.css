@@ -18,21 +18,13 @@
 	& hr {
 		width: 100%;
 	}
+}
 
-	/* & button {
-		width: 100%;
-		background-color: #ffc801;
-		transition: all 300ms;
-		margin: 1rem 0 0 0;
+.clicked {
+	pointer-events: none;
 
-		&:hover {
-			background-color: #103178;
-			color: white;
-			transition: all 300ms;
-		}
-
-		&:active {
-			background-color: #103178e3;
-		}
-	} */
+	&:hover {
+		cursor: none;
+		background-color: none;
+	}
 }

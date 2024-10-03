@@ -12,12 +12,21 @@ export interface Aku {
 	imgUrl: URL;
 }
 
+export interface Address {
+	street: string;
+	zipCode: string;
+	city: string;
+}
+
 export interface User {
 	name: string;
 	username: string;
 	password: string;
 	access: UserAccessLevel;
 	shoppingCart: Array<AkuInterface>;
+	fullName: string;
+	address: Address;
+	phone: number;
 }
 
 export interface CartItem extends Aku {

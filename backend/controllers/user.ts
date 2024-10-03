@@ -45,7 +45,20 @@ router.post(
 	"/new",
 	[getUser, userIsAdmin],
 	async (
-		req: Request<{}, {}, { username: string; password: string; name: string }>,
+		req: Request<
+			{},
+			{},
+			{
+				username: string;
+				password: string;
+				name: string;
+				fullName: string;
+				street: string;
+				zipCode: string;
+				city: string;
+				phone: number;
+			}
+		>,
 		res: Response
 	) => {
 		try {
@@ -54,8 +67,15 @@ router.post(
 				username: req.body.username,
 				password: hashedPassword,
 				name: req.body.name,
+				fullName: req.body.fullName,
+				address: {
+					street: req.body.street,
+					zipCode: req.body.zipCode,
+					city: req.body.city
+				},
 				access: "user",
-				shoppingCart: []
+				shoppingCart: [],
+				phone: req.body.phone
 			});
 
 			res.status(200).json(newUser);
@@ -64,6 +84,16 @@ router.post(
 		}
 	}
 );
+
+router.get("/address", getUser, (req: Request, res: Response) => {
+	const user = req.user!;
+
+	res.status(200).json({
+		shippingName: user.fullName,
+		address: user.address,
+		phone: user.phone
+	});
+});
 
 router.get("/", async (req: Request, res: Response) => {
 	try {

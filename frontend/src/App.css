@@ -6,3 +6,13 @@
 .outlet {
 	width: calc(100% - 240px);
 }
+
+.notification {
+	width: fit-content;
+	border-radius: 0.2rem;
+	background-color: rgb(125, 234, 125);
+	position: sticky;
+	top: 90%;
+	left: 50%;
+	height: fit-content;
+}

@@ -1,12 +1,5 @@
 import { TextField } from "@mui/material";
-import {
-	ChangeEvent,
-	FC,
-	FormEvent,
-	useContext,
-	useEffect,
-	useState
-} from "react";
+import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import "./Login.css";
 import { UserContext, UserContextType } from "../../util/context/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -19,15 +12,6 @@ const Login: FC = () => {
 	const { login } = useContext<UserContextType>(UserContext);
 
 	const redirect = useNavigate();
-
-	useEffect(() => {
-		const user = localStorage.getItem("user");
-
-		if (user) {
-			redirect("/");
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	const setUsernameHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		setUsername(event.target.value);
