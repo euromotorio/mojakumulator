@@ -22,9 +22,17 @@
 
 .clicked {
 	pointer-events: none;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 
 	&:hover {
 		cursor: none;
 		background-color: none;
 	}
+}
+
+.add-to-cart-button {
+	height: 3em;
 }

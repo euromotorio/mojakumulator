@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useState } from "react";
 import { Product } from "../../../../util/types";
 import "./ProductCard.css";
 import {
@@ -6,10 +6,7 @@ import {
 	UserContextType
 } from "../../../../util/context/UserContext";
 import { baseApiUrl } from "../../../../util/config/baseApiUrl";
-// import {
-// 	NotificationContext,
-// 	NotificationContextType
-// } from "../../../../util/context/NotificationContext";
+import { CircularProgress } from "@mui/material";
 
 interface ProductCardProps {
 	product: Product;
@@ -17,24 +14,23 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
 	const { user } = useContext<UserContextType>(UserContext);
-	// const { setMessage } =
-	// 	useContext<NotificationContextType>(NotificationContext);
+	const [clicked, setClicked] = useState<boolean>(false);
 
 	const addToCartHandler = async () => {
 		try {
-			const response = await fetch(
-				`${baseApiUrl}/users/cart/add/${product.id}`,
-				{
-					method: "PUT",
-					headers: {
-						Authorization: `bearer ${user?.token}`
-					}
+			await fetch(`${baseApiUrl}/users/cart/add/${product.id}`, {
+				method: "PUT",
+				headers: {
+					Authorization: `bearer ${user?.token}`
 				}
-			);
-
-			console.log(response);
+			});
+			setClicked(true);
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setTimeout(() => {
+				setClicked(false);
+			}, 2000);
 		}
 	};
 
@@ -47,7 +43,13 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 			</div>
 			<div>
 				<b>{product.price.toFixed(2)}KM</b>
-				<button onClick={addToCartHandler}>Dodaj u korpu</button>
+				<button
+					onClick={addToCartHandler}
+					disabled={clicked}
+					className={`${clicked && "clicked"} add-to-cart-button`}
+				>
+					{clicked ? <CircularProgress size="1em" /> : "Dodaj u korpu"}
+				</button>
 			</div>
 		</div>
 	);
