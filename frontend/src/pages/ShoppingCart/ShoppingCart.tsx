@@ -34,7 +34,6 @@ const ShoppingCart: FC = () => {
 		};
 
 		fetchCart();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const orderHandler = async (sum: number) => {
@@ -80,7 +79,7 @@ const ShoppingCart: FC = () => {
 		await fetch(`${baseApiUrl}/users/cart/clear/all`, {
 			method: "PUT",
 			headers: {
-				Authorization: `bearer ${user?.token}`
+				Authorization: `bearer ${userToken}`
 			}
 		});
 	};
