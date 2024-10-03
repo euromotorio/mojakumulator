@@ -132,6 +132,7 @@ router.put(
 
 			user.shoppingCart = user?.shoppingCart.concat(product.id);
 			await user.save();
+			res.status(200).json({ message: "Proizvod uspjesno dodan u korpu" });
 		} catch (err: any) {
 			res.status(500).json({ message: err.message });
 		}
