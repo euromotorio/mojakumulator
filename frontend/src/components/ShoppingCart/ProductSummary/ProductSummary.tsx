@@ -39,7 +39,9 @@ const ProductSummary: FC<ProductSummaryProps> = ({ cart, onOrder }) => {
 					))}
 				</div>
 			) : (
-				<CircularProgress className="loading-button" />
+				<div className="loading-container">
+					<CircularProgress className="loading-button" />
+				</div>
 			)}
 			<div className="order-button-container">
 				<p className="sum">

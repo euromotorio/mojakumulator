@@ -13,6 +13,8 @@
 	padding: 1rem 1.5rem;
 	border-right: 1px rgba(94, 94, 94, 0.674) solid;
 	align-items: center;
+	position: sticky;
+	top: 100px;
 }
 
 .sidebar-footer {

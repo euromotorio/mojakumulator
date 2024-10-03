@@ -3,22 +3,12 @@ import { ShoppingCart as ShoppingCartType } from "../../util/types";
 import { UserContext, UserContextType } from "../../util/context/UserContext";
 import ProductSummary from "../../components/ShoppingCart/ProductSummary/ProductSummary";
 import "./ShoppingCart.css";
-import CheckoutForm from "../../components/ShoppingCart/CheckoutForm/CheckoutForm";
 import { baseApiUrl } from "../../util/config/baseApiUrl";
 import emailjs from "@emailjs/browser";
 import emailjsIds from "../../util/config/emailjsIds";
 
 const ShoppingCart: FC = () => {
 	const [products, setProducts] = useState<ShoppingCartType>();
-
-	const [checkoutData, setCheckoutData] = useState({
-		name: "",
-		surname: "",
-		address: "",
-		city: "",
-		zip: "",
-		phone: ""
-	});
 
 	const { user } = useContext<UserContextType>(UserContext);
 
@@ -29,6 +19,10 @@ const ShoppingCart: FC = () => {
 					Authorization: `bearer ${user?.token}`
 				}
 			});
+
+			if (!response.ok) {
+				return setProducts({ products: [], sum: 0 });
+			}
 
 			const jsonData = await response.json();
 
@@ -42,6 +36,14 @@ const ShoppingCart: FC = () => {
 	}, []);
 
 	const orderHandler = async (sum: number) => {
+		const response = await fetch(`${baseApiUrl}/users/address`, {
+			headers: {
+				Authorization: `bearer ${user?.token}`
+			}
+		});
+
+		const checkoutData = await response.json();
+
 		const templateParams = {
 			user_name: user?.name,
 			products: products?.products.map((product) => ({
@@ -50,11 +52,11 @@ const ShoppingCart: FC = () => {
 				price: product.price
 			})),
 			total_price: sum,
-			name: checkoutData.name,
-			surname: checkoutData.surname,
-			address: checkoutData.address,
-			city: checkoutData.city,
-			zip: checkoutData.zip,
+			name: checkoutData.shippingName[0],
+			surname: checkoutData.shippingName[1],
+			address: checkoutData.address.street,
+			city: checkoutData.address.city,
+			zip: checkoutData.address.zipCode,
 			phone: checkoutData.phone
 		};
 
@@ -63,16 +65,7 @@ const ShoppingCart: FC = () => {
 				publicKey: emailjsIds.publicKey
 			})
 			.then(
-				(response) => {
-					console.log("SUCCESS!", response.status, response.text);
-					setCheckoutData({
-						name: "",
-						surname: "",
-						address: "",
-						city: "",
-						zip: "",
-						phone: ""
-					});
+				() => {
 					setProducts({ products: [], sum: 0 });
 				},
 				(error) => {
@@ -90,10 +83,6 @@ const ShoppingCart: FC = () => {
 
 	return (
 		<div className="shopping-cart">
-			<CheckoutForm
-				checkoutData={checkoutData}
-				setCheckoutData={setCheckoutData}
-			/>
 			<ProductSummary cart={products} onOrder={orderHandler} />
 		</div>
 	);

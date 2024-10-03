@@ -19,6 +19,6 @@ export interface ShoppingCartItem extends Product {
 }
 
 export interface ShoppingCart {
-	products: Array<ShoppingCartItem>;
+	products: Array<ShoppingCartItem> | [];
 	sum: number;
 }

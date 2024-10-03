@@ -26,13 +26,27 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 	const [username, setUsername] = useState<string>();
 	const [name, setName] = useState<string>();
 	const [password, setPassword] = useState<string>();
+	const [shippingName, setShippingName] = useState<string>();
+	const [shippingAddress, setShippingAddress] = useState<string>();
+	const [shippingZipCode, setShippingZipCode] = useState<string>();
+	const [shippingCity, setShippingCity] = useState<string>();
+	const [shippingContactPhone, setShippingContactPhone] = useState<number>();
 
 	const saveUserHandler = async (event: FormEvent) => {
 		event.preventDefault();
 
 		const response = await fetch(`${baseApiUrl}/users/new`, {
 			method: "POST",
-			body: JSON.stringify({ username, name, password }),
+			body: JSON.stringify({
+				username,
+				name,
+				password,
+				fullName: shippingName,
+				street: shippingAddress,
+				zipCode: shippingZipCode,
+				city: shippingCity,
+				phone: shippingContactPhone
+			}),
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `bearer ${user?.token}`
@@ -77,6 +91,49 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 						value={password}
 						onChange={(event: ChangeEvent<HTMLInputElement>) =>
 							setPassword(event.target.value)
+						}
+					/>
+				</div>
+				<TextField
+					label="Ime i prezime"
+					required
+					value={shippingName}
+					onChange={(event: ChangeEvent<HTMLInputElement>) =>
+						setShippingName(event.target.value)
+					}
+				/>
+				<TextField
+					label="Ulica dostave"
+					required
+					value={shippingAddress}
+					onChange={(event: ChangeEvent<HTMLInputElement>) =>
+						setShippingAddress(event.target.value)
+					}
+				/>
+				<div>
+					<TextField
+						label="Poštanski broj"
+						required
+						value={shippingZipCode}
+						onChange={(event: ChangeEvent<HTMLInputElement>) =>
+							setShippingZipCode(event.target.value)
+						}
+					/>
+					<TextField
+						label="Grad"
+						required
+						value={shippingCity}
+						onChange={(event: ChangeEvent<HTMLInputElement>) =>
+							setShippingCity(event.target.value)
+						}
+					/>
+					<TextField
+						label="Telefon"
+						type="tel"
+						required
+						value={shippingContactPhone}
+						onChange={(event: ChangeEvent<HTMLInputElement>) =>
+							setShippingContactPhone(+event.target.value)
 						}
 					/>
 				</div>
