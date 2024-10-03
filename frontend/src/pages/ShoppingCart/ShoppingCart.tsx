@@ -14,9 +14,11 @@ const ShoppingCart: FC = () => {
 
 	useEffect(() => {
 		const fetchCart = async () => {
+			const userToken = JSON.parse(localStorage.getItem("user")!).token;
+
 			const response = await fetch(`${baseApiUrl}/akus/shopping-cart`, {
 				headers: {
-					Authorization: `bearer ${user?.token}`
+					Authorization: `bearer ${userToken}`
 				}
 			});
 
@@ -36,9 +38,11 @@ const ShoppingCart: FC = () => {
 	}, []);
 
 	const orderHandler = async (sum: number) => {
+		const userToken = JSON.parse(localStorage.getItem("user")!).token;
+
 		const response = await fetch(`${baseApiUrl}/users/address`, {
 			headers: {
-				Authorization: `bearer ${user?.token}`
+				Authorization: `bearer ${userToken}`
 			}
 		});
 
