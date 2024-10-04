@@ -24,6 +24,15 @@ const akuSchema = new mongoose.Schema<AkuInterface>({
 	imgUrl: {
 		type: String,
 		required: true
+	},
+	warranty: {
+		type: Number,
+		required: true
+	},
+	dimensions: {
+		type: String,
+		required: true,
+		trim: true
 	}
 });
 

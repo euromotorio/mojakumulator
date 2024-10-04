@@ -43,7 +43,9 @@ router.get("/shopping-cart", getUser, async (req: Request, res: Response) => {
 					name: item.name,
 					brand: item.brand,
 					price: item.price,
-					imgUrl: item.imgUrl
+					imgUrl: item.imgUrl,
+					warranty: item.warranty,
+					dimensions: item.dimensions
 				});
 			}
 			return acc;
@@ -58,5 +60,18 @@ router.get("/shopping-cart", getUser, async (req: Request, res: Response) => {
 		res.status(500).json({ message: err.message });
 	}
 });
+
+router.get(
+	"/:productId",
+	async (req: Request<{ productId: string }>, res: Response) => {
+		try {
+			const aku = await Aku.findById(req.params.productId);
+
+			return res.status(200).json(aku);
+		} catch (err: any) {
+			res.status(500).json({ message: err.message });
+		}
+	}
+);
 
 export default router;

@@ -1,8 +1,13 @@
+export type Brand = "urban" | "exide";
+
 export interface Product {
 	id: string;
 	imgUrl: string;
 	name: string;
 	price: number;
+	brand: Brand;
+	dimensions: string;
+	warranty: number;
 }
 
 type UserAccessLevel = "user" | "admin";

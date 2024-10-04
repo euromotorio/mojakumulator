@@ -24,6 +24,8 @@ import {
 	NotificationContext,
 	NotificationContextType
 } from "./util/context/NotificationContext";
+import Aku from "./pages/Aku/Aku";
+import { singleAkuLoader } from "./util/loaders/singleAkuLoader";
 
 const Layout: FC = () => {
 	const { user, login } = useContext<UserContextType>(UserContext);
@@ -69,6 +71,9 @@ const App: FC = () => {
 			<Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
 				<Route path="urban" element={<Urban />} loader={akuLoader} />
 				<Route path="exide" element={<Exide />} loader={akuLoader} />
+				<Route path="proizvodi">
+					<Route path=":productId" element={<Aku />} loader={singleAkuLoader} />
+				</Route>
 				<Route path="login" element={<Login />} />
 				<Route path="admin">
 					<Route path="korisnici" element={<Users />} loader={userLoader} />

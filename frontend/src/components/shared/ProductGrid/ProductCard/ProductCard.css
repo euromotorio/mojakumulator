@@ -9,6 +9,19 @@
 	height: 350px;
 	margin: 2rem 0;
 
+	text-decoration: none;
+	color: #103178;
+
+	&:hover {
+		color: #103178;
+	}
+
+	&:active,
+	&:visited {
+		font-weight: normal;
+		outline: none;
+	}
+
 	& b {
 		color: #103178;
 		font-weight: normal;

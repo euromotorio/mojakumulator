@@ -30,7 +30,7 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 	const [shippingAddress, setShippingAddress] = useState<string>();
 	const [shippingZipCode, setShippingZipCode] = useState<string>();
 	const [shippingCity, setShippingCity] = useState<string>();
-	const [shippingContactPhone, setShippingContactPhone] = useState<number>();
+	const [shippingContactPhone, setShippingContactPhone] = useState<string>();
 
 	const saveUserHandler = async (event: FormEvent) => {
 		event.preventDefault();
@@ -133,7 +133,7 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 						required
 						value={shippingContactPhone}
 						onChange={(event: ChangeEvent<HTMLInputElement>) =>
-							setShippingContactPhone(+event.target.value)
+							setShippingContactPhone(event.target.value)
 						}
 					/>
 				</div>

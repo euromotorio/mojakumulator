@@ -10,6 +10,8 @@ export interface Aku {
 	brand: Brand;
 	price: number;
 	imgUrl: URL;
+	warranty: number;
+	dimensions: string;
 }
 
 export interface Address {
