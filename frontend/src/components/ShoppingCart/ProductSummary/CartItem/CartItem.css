@@ -53,3 +53,33 @@
 		transition: all 250ms;
 	}
 }
+
+@media screen and (max-width: 768px) {
+	.cart-item {
+		width: 100%;
+	}
+
+	.flex-item {
+		text-wrap: nowrap;
+	}
+
+	.product-info {
+		margin: 0;
+		padding: 0;
+		width: 900px;
+	}
+
+	.product-image {
+		display: none;
+	}
+
+	.price-per-product {
+		padding: 0;
+		font-size: 1.2em;
+		width: 4rem;
+	}
+
+	.delete-button {
+		display: none !important;
+	}
+}

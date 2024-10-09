@@ -7,7 +7,11 @@ import {
 	UserContextType
 } from "../../../util/context/UserContext";
 
-const SideBar: FC = () => {
+interface SideBarProps {
+	opened?: boolean;
+}
+
+const SideBar: FC<SideBarProps> = ({ opened }) => {
 	const { user, logout } = useContext<UserContextType>(UserContext);
 
 	const logoutHandler = () => {
@@ -16,7 +20,7 @@ const SideBar: FC = () => {
 	};
 
 	return (
-		<div className="sidebar">
+		<div className={`sidebar ${opened && "opened-sidebar"}`}>
 			<div className="sidebar-header">
 				<CustomLink location="/urban" text="Urban" />
 				<CustomLink location="/exide" text="Exide" />

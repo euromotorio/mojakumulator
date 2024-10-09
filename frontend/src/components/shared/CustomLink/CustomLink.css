@@ -22,3 +22,9 @@
 		background-color: #103178e3;
 	}
 }
+
+@media screen and (max-width: 768px) {
+	.link {
+		font-size: 1em !important;
+	}
+}

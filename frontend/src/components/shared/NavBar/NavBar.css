@@ -25,3 +25,18 @@
 		color: rgb(220, 220, 220);
 	}
 }
+
+.burger {
+	display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+	.welcome,
+	.homepage-link {
+		visibility: hidden;
+	}
+
+	.burger {
+		display: inline-block !important;
+	}
+}

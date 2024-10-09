@@ -26,3 +26,25 @@
 		margin: 0.5rem 0;
 	}
 }
+
+.opened-sidebar {
+	display: flex !important;
+}
+
+@media screen and (max-width: 768px) {
+	.sidebar {
+		display: none !important;
+	}
+
+	.opened-sidebar {
+		display: flex !important;
+		position: absolute;
+		left: 0;
+	}
+
+	.sidebar-footer {
+		& a {
+			font-size: 1em !important;
+		}
+	}
+}

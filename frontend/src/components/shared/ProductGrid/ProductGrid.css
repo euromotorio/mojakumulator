@@ -4,3 +4,21 @@
 	width: 100%;
 	justify-content: space-around;
 }
+
+@media screen and (max-width: 1600px) {
+	.product-grid {
+		grid-template-columns: auto auto auto;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.product-grid {
+		grid-template-columns: auto auto;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.product-grid {
+		grid-template-columns: auto;
+	}
+}

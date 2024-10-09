@@ -19,3 +19,9 @@
 	left: 50%;
 	height: fit-content;
 }
+
+@media screen and (max-width: 768px) {
+	.outlet {
+		width: 100%;
+	}
+}

@@ -9,6 +9,14 @@
 	max-height: 500px;
 }
 
+@media screen and (max-width: 768px) {
+	.product-summary {
+		min-width: 0;
+		width: 100vw;
+		margin: 1rem;
+	}
+}
+
 .sum {
 	margin: 2rem 0 0 0;
 	font-weight: lighter;

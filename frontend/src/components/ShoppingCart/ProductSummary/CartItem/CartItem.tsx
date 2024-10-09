@@ -67,17 +67,19 @@ const CartItem: FC<CartItemProps> = ({
 				<>
 					<div className="flex-item">
 						<p className="price-per-product">{product.price * count}KM</p>
-						<img src={product.imgUrl} width="150px" />
+						<img src={product.imgUrl} width="150px" className="product-image" />
 					</div>
-					<div className="flex-item">
+					<div className="flex-item product-info">
 						<b>{product.name}</b>
-						<div>
+						<div className="quantity-control">
 							<RemoveIcon onClick={subtractHandler} className="hover-pointer" />
 							<p>{count}</p>
 							<AddIcon onClick={addHandler} className="hover-pointer" />
 						</div>
 					</div>
-					<DeleteIcon onClick={emptyHandler} className="hover-pointer" />
+					<div className="delete-button">
+						<DeleteIcon onClick={emptyHandler} className="hover-pointer" />
+					</div>
 				</>
 			)}
 		</div>
