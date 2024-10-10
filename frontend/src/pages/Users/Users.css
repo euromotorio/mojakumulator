@@ -3,6 +3,8 @@ table {
 	border-collapse: collapse;
 	width: 80vw;
 	margin: 2rem 5rem;
+	position: absolute;
+	top: 8rem;
 
 	& .delete {
 		width: 1em;
@@ -39,5 +41,13 @@ th {
 
 	&:active {
 		font-weight: normal;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	table {
+		width: 90vw;
+		margin: 2rem 0 0 0;
+		top: 6rem;
 	}
 }

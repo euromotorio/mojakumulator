@@ -20,3 +20,9 @@
 		background-color: white;
 	}
 }
+
+@media screen and (max-width: 768px) {
+	.login-form {
+		width: 90vw;
+	}
+}

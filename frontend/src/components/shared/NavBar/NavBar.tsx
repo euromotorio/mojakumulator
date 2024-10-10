@@ -1,6 +1,6 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import "./NavBar.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
 	UserContext,
@@ -14,6 +14,12 @@ const NavBar: FC = () => {
 	const { user } = useContext<UserContextType>(UserContext);
 
 	const [openSidebar, setOpenSidebar] = useState<boolean>(false);
+
+	const location = useLocation();
+
+	useEffect(() => {
+		setOpenSidebar(false);
+	}, [location]);
 
 	return (
 		<div className="navbar">
