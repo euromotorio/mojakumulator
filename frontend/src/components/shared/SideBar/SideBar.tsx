@@ -23,7 +23,10 @@ const SideBar: FC<SideBarProps> = ({ opened }) => {
 		<div className={`sidebar ${opened && "opened-sidebar"}`}>
 			<div className="sidebar-header">
 				<CustomLink location="/urban" text="Urban" />
+				<CustomLink location="/klas" text="Klas" />
 				<CustomLink location="/exide" text="Exide" />
+				<CustomLink location="/rombat" text="Rombat" />
+				<CustomLink location="/varta" text="Varta" />
 			</div>
 			<div className="sidebar-footer">
 				{user?.access === "admin" && (

@@ -16,7 +16,9 @@ router.get(
 		const brand = req.query.brand;
 
 		try {
-			const akus = await Aku.find({ brand: { $regex: brand, $options: "i" } });
+			const akus = await Aku.find({
+				brand: { $regex: brand, $options: "i" }
+			}).sort({ name: 1 });
 
 			return res.status(200).json(akus);
 		} catch (err: any) {
