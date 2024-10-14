@@ -8,6 +8,7 @@ export interface Product {
 	brand: Brand;
 	dimensions: string;
 	warranty: number;
+	code: number;
 }
 
 type UserAccessLevel = "user" | "admin";

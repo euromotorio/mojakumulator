@@ -52,7 +52,8 @@ const ShoppingCart: FC = () => {
 			products: products?.products.map((product) => ({
 				product_name: product.name,
 				quantity: product.count,
-				price: product.price
+				price: product.price,
+				code: product.code
 			})),
 			total_price: sum,
 			name: checkoutData.shippingName[0],
