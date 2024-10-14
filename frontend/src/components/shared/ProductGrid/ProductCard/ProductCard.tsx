@@ -44,7 +44,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 				<hr />
 				<h3>
 					{product.name.includes("99")
-						? product.name.replace("99", "100")
+						? product.name.replace("99", "1")
 						: product.name}
 				</h3>
 			</div>
