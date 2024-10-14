@@ -12,6 +12,7 @@ export interface Aku {
 	imgUrl: URL;
 	warranty: number;
 	dimensions: string;
+	code: number;
 }
 
 export interface Address {
