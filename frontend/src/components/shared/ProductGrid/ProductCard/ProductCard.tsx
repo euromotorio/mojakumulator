@@ -42,7 +42,11 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 			<div>
 				<img src={product.imgUrl} width={250} />
 				<hr />
-				<h3>{product.name}</h3>
+				<h3>
+					{product.name.includes("99")
+						? product.name.replace("99", "100")
+						: product.name}
+				</h3>
 			</div>
 			<div>
 				<b>{product.price.toFixed(2)}KM</b>
