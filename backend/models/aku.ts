@@ -33,6 +33,11 @@ const akuSchema = new mongoose.Schema<AkuInterface>({
 		type: String,
 		required: true,
 		trim: true
+	},
+	code: {
+		type: Number,
+		required: true,
+		unique: true
 	}
 });
 
