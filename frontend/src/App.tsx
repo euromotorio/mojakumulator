@@ -28,7 +28,7 @@ import Aku from "./pages/Aku/Aku";
 import { singleAkuLoader } from "./util/loaders/singleAkuLoader";
 import Varta from "./pages/Varta/Varta";
 import Rombat from "./pages/Rombat/Rombat";
-import Klas from "./pages/Klas/Klas";
+// import Klas from "./pages/Klas/Klas";
 
 const Layout: FC = () => {
 	const { user, login } = useContext<UserContextType>(UserContext);
@@ -76,7 +76,7 @@ const App: FC = () => {
 				<Route path="exide" element={<Exide />} loader={akuLoader} />
 				<Route path="varta" element={<Varta />} loader={akuLoader} />
 				<Route path="rombat" element={<Rombat />} loader={akuLoader} />
-				<Route path="klas" element={<Klas />} loader={akuLoader} />
+				{/* <Route path="klas" element={<Klas />} loader={akuLoader} /> */}
 				<Route path="proizvodi">
 					<Route path=":productId" element={<Aku />} loader={singleAkuLoader} />
 				</Route>
