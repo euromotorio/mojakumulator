@@ -13,7 +13,7 @@ import {
 	UserContextType
 } from "../../../util/context/UserContext";
 import { User } from "../../../util/types";
-import { baseApiUrl } from "../../../util/config/baseApiUrl";
+// import { baseApiUrl } from "../../../util/config/baseApiUrl";
 
 interface NewUserProps {
 	onClickModal: () => void;
@@ -35,7 +35,7 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 	const saveUserHandler = async (event: FormEvent) => {
 		event.preventDefault();
 
-		const response = await fetch(`${baseApiUrl}/users/new`, {
+		const response = await fetch(`api/users/new`, {
 			method: "POST",
 			body: JSON.stringify({
 				username,

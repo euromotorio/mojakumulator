@@ -6,7 +6,7 @@ import {
 	UserContext,
 	UserContextType
 } from "../../../util/context/UserContext";
-import { baseApiUrl } from "../../../util/config/baseApiUrl";
+// import { baseApiUrl } from "../../../util/config/baseApiUrl";
 
 interface UserItemProps {
 	company: UserInterface;
@@ -18,7 +18,7 @@ const User: FC<UserItemProps> = ({ company, onDelete }) => {
 
 	const deleteHandler = async () => {
 		if (window.confirm("Da li ste sigurni?")) {
-			await fetch(`${baseApiUrl}/users/${company.id}`, {
+			await fetch(`api/users/${company.id}`, {
 				headers: {
 					Authorization: `bearer ${user?.token}`
 				},

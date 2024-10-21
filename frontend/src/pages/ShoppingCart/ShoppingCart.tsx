@@ -3,7 +3,7 @@ import { ShoppingCart as ShoppingCartType } from "../../util/types";
 import { UserContext, UserContextType } from "../../util/context/UserContext";
 import ProductSummary from "../../components/ShoppingCart/ProductSummary/ProductSummary";
 import "./ShoppingCart.css";
-import { baseApiUrl } from "../../util/config/baseApiUrl";
+// import { baseApiUrl } from "../../util/config/baseApiUrl";
 import emailjs from "@emailjs/browser";
 import emailjsIds from "../../util/config/emailjsIds";
 
@@ -16,7 +16,7 @@ const ShoppingCart: FC = () => {
 		const fetchCart = async () => {
 			const userToken = JSON.parse(localStorage.getItem("user")!).token;
 
-			const response = await fetch(`${baseApiUrl}/akus/shopping-cart`, {
+			const response = await fetch(`$api/akus/shopping-cart`, {
 				headers: {
 					Authorization: `bearer ${userToken}`
 				}
@@ -39,7 +39,7 @@ const ShoppingCart: FC = () => {
 	const orderHandler = async (sum: number) => {
 		const userToken = JSON.parse(localStorage.getItem("user")!).token;
 
-		const response = await fetch(`${baseApiUrl}/users/address`, {
+		const response = await fetch(`api/users/address`, {
 			headers: {
 				Authorization: `bearer ${userToken}`
 			}
@@ -77,7 +77,7 @@ const ShoppingCart: FC = () => {
 				}
 			);
 
-		await fetch(`${baseApiUrl}/users/cart/clear/all`, {
+		await fetch(`api/users/cart/clear/all`, {
 			method: "PUT",
 			headers: {
 				Authorization: `bearer ${userToken}`

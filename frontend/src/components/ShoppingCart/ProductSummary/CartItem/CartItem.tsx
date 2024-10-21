@@ -8,7 +8,7 @@ import {
 	UserContext,
 	UserContextType
 } from "../../../../util/context/UserContext";
-import { baseApiUrl } from "../../../../util/config/baseApiUrl";
+// import { baseApiUrl } from "../../../../util/config/baseApiUrl";
 
 interface CartItemProps {
 	product: ShoppingCartItem;
@@ -29,7 +29,7 @@ const CartItem: FC<CartItemProps> = ({
 		setCount((count) => count - 1);
 		onCartSubtract(product.price);
 
-		await fetch(`${baseApiUrl}/users/cart/remove/${product.id}`, {
+		await fetch(`api/users/cart/remove/${product.id}`, {
 			method: "PUT",
 			headers: {
 				Authorization: `bearer ${user?.token}`
@@ -41,7 +41,7 @@ const CartItem: FC<CartItemProps> = ({
 		setCount((count) => count + 1);
 		onCartAdd(product.price);
 
-		await fetch(`${baseApiUrl}/users/cart/add/${product.id}`, {
+		await fetch(`api/users/cart/add/${product.id}`, {
 			method: "PUT",
 			headers: {
 				Authorization: `bearer ${user?.token}`
@@ -53,7 +53,7 @@ const CartItem: FC<CartItemProps> = ({
 		setCount(0);
 		onCartSubtract(product.price * count);
 
-		await fetch(`${baseApiUrl}/users/cart/clear/${product.id}`, {
+		await fetch(`api/users/cart/clear/${product.id}`, {
 			method: "PUT",
 			headers: {
 				Authorization: `bearer ${user?.token}`

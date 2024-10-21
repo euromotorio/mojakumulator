@@ -2,7 +2,7 @@ import { FC, MouseEvent, useContext, useState } from "react";
 import "./Aku.css";
 import { Product } from "../../util/types";
 import { useLoaderData } from "react-router-dom";
-import { baseApiUrl } from "../../util/config/baseApiUrl";
+// import { baseApiUrl } from "../../util/config/baseApiUrl";
 import { UserContext, UserContextType } from "../../util/context/UserContext";
 import { CircularProgress } from "@mui/material";
 
@@ -16,7 +16,7 @@ const Aku: FC = () => {
 		event.preventDefault();
 
 		try {
-			await fetch(`${baseApiUrl}/users/cart/add/${aku.id}`, {
+			await fetch(`api/users/cart/add/${aku.id}`, {
 				method: "PUT",
 				headers: {
 					Authorization: `bearer ${user?.token}`

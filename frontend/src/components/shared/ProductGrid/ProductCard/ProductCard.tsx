@@ -5,7 +5,7 @@ import {
 	UserContext,
 	UserContextType
 } from "../../../../util/context/UserContext";
-import { baseApiUrl } from "../../../../util/config/baseApiUrl";
+// import { baseApiUrl } from "../../../../util/config/baseApiUrl";
 import { CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 		event.preventDefault();
 
 		try {
-			await fetch(`${baseApiUrl}/users/cart/add/${product.id}`, {
+			await fetch(`api/users/cart/add/${product.id}`, {
 				method: "PUT",
 				headers: {
 					Authorization: `bearer ${user?.token}`
