@@ -8,7 +8,7 @@ export const singleAkuLoader = async ({
 }) => {
 	const id = params.productId;
 
-	const response = await fetch(`api/akus/${id}`);
+	const response = await fetch(`/api/akus/${id}`);
 
 	if (!response.ok) {
 		throw { message: "Failed to fetch akus.", status: 500 };

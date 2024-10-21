@@ -18,7 +18,7 @@ const User: FC<UserItemProps> = ({ company, onDelete }) => {
 
 	const deleteHandler = async () => {
 		if (window.confirm("Da li ste sigurni?")) {
-			await fetch(`api/users/${company.id}`, {
+			await fetch(`/api/users/${company.id}`, {
 				headers: {
 					Authorization: `bearer ${user?.token}`
 				},

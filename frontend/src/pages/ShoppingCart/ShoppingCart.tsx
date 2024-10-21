@@ -16,7 +16,7 @@ const ShoppingCart: FC = () => {
 		const fetchCart = async () => {
 			const userToken = JSON.parse(localStorage.getItem("user")!).token;
 
-			const response = await fetch(`$api/akus/shopping-cart`, {
+			const response = await fetch(`/api/akus/shopping-cart`, {
 				headers: {
 					Authorization: `bearer ${userToken}`
 				}
@@ -39,7 +39,7 @@ const ShoppingCart: FC = () => {
 	const orderHandler = async (sum: number) => {
 		const userToken = JSON.parse(localStorage.getItem("user")!).token;
 
-		const response = await fetch(`api/users/address`, {
+		const response = await fetch(`/api/users/address`, {
 			headers: {
 				Authorization: `bearer ${userToken}`
 			}
@@ -77,7 +77,7 @@ const ShoppingCart: FC = () => {
 				}
 			);
 
-		await fetch(`api/users/cart/clear/all`, {
+		await fetch(`/api/users/cart/clear/all`, {
 			method: "PUT",
 			headers: {
 				Authorization: `bearer ${userToken}`

@@ -6,7 +6,7 @@ export const akuLoader = async ({ request }: { request: Request }) => {
 
 	const brand = pathname.split("/")[1];
 
-	const response = await fetch(`api/akus?brand=${brand}`);
+	const response = await fetch(`/api/akus?brand=${brand}`);
 
 	if (!response.ok) {
 		throw { message: "Failed to fetch akus.", status: 500 };

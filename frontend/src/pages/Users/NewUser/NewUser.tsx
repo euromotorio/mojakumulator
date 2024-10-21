@@ -35,7 +35,7 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 	const saveUserHandler = async (event: FormEvent) => {
 		event.preventDefault();
 
-		const response = await fetch(`api/users/new`, {
+		const response = await fetch(`/api/users/new`, {
 			method: "POST",
 			body: JSON.stringify({
 				username,

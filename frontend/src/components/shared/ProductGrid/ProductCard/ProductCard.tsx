@@ -21,7 +21,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 		event.preventDefault();
 
 		try {
-			await fetch(`api/users/cart/add/${product.id}`, {
+			await fetch(`/api/users/cart/add/${product.id}`, {
 				method: "PUT",
 				headers: {
 					Authorization: `bearer ${user?.token}`

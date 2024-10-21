@@ -16,7 +16,7 @@ const Aku: FC = () => {
 		event.preventDefault();
 
 		try {
-			await fetch(`api/users/cart/add/${aku.id}`, {
+			await fetch(`/api/users/cart/add/${aku.id}`, {
 				method: "PUT",
 				headers: {
 					Authorization: `bearer ${user?.token}`
