@@ -16,7 +16,7 @@ const path = require("path");
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static(path.resolve(__dirname, "./frontend")));
+app.use(express.static(path.resolve(__dirname, "../frontend")));
 
 app.use("/api/akus", akuRouter);
 app.use("/api/users", userRouter);
@@ -24,7 +24,7 @@ app.use("/api/users", userRouter);
 app.use(errorHandler);
 
 app.get("*", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "./frontend", "index.html"));
+	res.sendFile(path.resolve(__dirname, "../frontend", "index.html"));
 });
 
 const PORT = process.env.PORT || 3000;
