@@ -1,5 +1,5 @@
 import { Params } from "react-router-dom";
-// import { baseApiUrl } from "../config/baseApiUrl";
+import { baseApiUrl } from "../config/baseApiUrl";
 
 export const singleAkuLoader = async ({
 	params
@@ -8,7 +8,7 @@ export const singleAkuLoader = async ({
 }) => {
 	const id = params.productId;
 
-	const response = await fetch(`/api/akus/${id}`);
+	const response = await fetch(`${baseApiUrl}/api/akus/${id}`);
 
 	if (!response.ok) {
 		throw { message: "Failed to fetch akus.", status: 500 };

@@ -3,7 +3,7 @@ import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import "./Login.css";
 import { UserContext, UserContextType } from "../../util/context/UserContext";
 import { useNavigate } from "react-router-dom";
-// import { baseApiUrl } from "../../util/config/baseApiUrl";
+import { baseApiUrl } from "../../util/config/baseApiUrl";
 
 const Login: FC = () => {
 	const [username, setUsername] = useState<string>("");
@@ -24,23 +24,28 @@ const Login: FC = () => {
 	const loginHandler = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const response = (
-			await fetch(`/api/users/login`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({ username, password })
-			})
-		).json();
+		try {
+			const response = (
+				await fetch(`${baseApiUrl}/api/users/login`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json"
+					},
+					body: JSON.stringify({ username, password })
+				})
+			).json();
 
-		const loginUser = await response;
+			const loginUser = await response;
 
-		localStorage.setItem("user", JSON.stringify(loginUser));
+			localStorage.setItem("user", JSON.stringify(loginUser));
 
-		login(loginUser);
+			login(loginUser);
 
-		redirect("/");
+			redirect("/");
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
