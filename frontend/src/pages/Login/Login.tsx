@@ -25,18 +25,19 @@ const Login: FC = () => {
 		event.preventDefault();
 
 		try {
-			const response = (
-				await fetch(`${baseApiUrl}/api/users/login`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json"
-					},
-					body: JSON.stringify({ username, password })
-				})
-			).json();
+			const response = await fetch(`${baseApiUrl}/api/users/login`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({ username, password })
+			});
 
-			const loginUser = await response;
+			if (!response.ok) {
+				return;
+			}
+
+			const loginUser = await response.json();
 
 			localStorage.setItem("user", JSON.stringify(loginUser));
 
