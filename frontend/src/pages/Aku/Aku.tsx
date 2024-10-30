@@ -54,10 +54,20 @@ const Aku: FC = () => {
 					<h2>{aku.price.toFixed(2)}KM</h2>
 					<button
 						onClick={addToCartHandler}
-						disabled={clicked}
-						className={`${clicked && "clicked"}`}
+						disabled={clicked || !aku.inStock}
+						className={`${clicked && "clicked"} ${
+							!aku.inStock && "not-in-stock"
+						}`}
 					>
-						{clicked ? <CircularProgress size="1.3em" /> : "Dodaj u korpu"}
+						{aku.inStock ? (
+							clicked ? (
+								<CircularProgress size="1.3em" />
+							) : (
+								"Dodaj u korpu"
+							)
+						) : (
+							"Nema na stanju"
+						)}
 					</button>
 				</div>
 			</div>

@@ -38,7 +38,11 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 	};
 
 	return (
-		<Link to={`/proizvodi/${product.id}`} className="card">
+		<Link
+			to={`/proizvodi/${product.id}`}
+			className={`card ${!product.inStock && "card-disabled"}`}
+		>
+			{!product.inStock && <div className="card-overlay">Nema na stanju</div>}
 			<div>
 				<img src={product.imgUrl} width={250} />
 				<hr />

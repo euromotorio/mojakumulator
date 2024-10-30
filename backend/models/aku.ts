@@ -38,6 +38,10 @@ const akuSchema = new mongoose.Schema<AkuInterface>({
 		type: Number,
 		required: true,
 		unique: true
+	},
+	inStock: {
+		type: Boolean,
+		required: true
 	}
 });
 

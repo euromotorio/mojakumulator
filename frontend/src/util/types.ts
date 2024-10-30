@@ -9,6 +9,7 @@ export interface Product {
 	dimensions: string;
 	warranty: number;
 	code: number;
+	inStock: boolean;
 }
 
 type UserAccessLevel = "user" | "admin";

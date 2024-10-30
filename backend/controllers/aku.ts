@@ -48,7 +48,8 @@ router.get("/shopping-cart", getUser, async (req: Request, res: Response) => {
 					imgUrl: item.imgUrl,
 					warranty: item.warranty,
 					dimensions: item.dimensions,
-					code: item.code
+					code: item.code,
+					inStock: item.inStock
 				});
 			}
 			return acc;
