@@ -42,6 +42,10 @@ const akuSchema = new mongoose.Schema<AkuInterface>({
 	inStock: {
 		type: Boolean,
 		required: true
+	},
+	subBrand: {
+		type: String,
+		required: true
 	}
 });
 

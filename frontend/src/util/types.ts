@@ -10,6 +10,7 @@ export interface Product {
 	warranty: number;
 	code: number;
 	inStock: boolean;
+	subBrand: string;
 }
 
 type UserAccessLevel = "user" | "admin";
@@ -28,4 +29,9 @@ export interface ShoppingCartItem extends Product {
 export interface ShoppingCart {
 	products: Array<ShoppingCartItem> | [];
 	sum: number;
+}
+
+export interface PageData {
+	subBrand: string;
+	akus: Array<Product>;
 }

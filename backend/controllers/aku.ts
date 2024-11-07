@@ -20,7 +20,32 @@ router.get(
 				brand: { $regex: brand, $options: "i" }
 			}).sort({ name: 1 });
 
-			return res.status(200).json(akus);
+			const transformedData = akus.reduce(
+				(
+					result: Array<{ subBrand: string; akus: Array<AkuInterface> }>,
+					aku
+				) => {
+					const existingSubBrand = result.find(
+						(item) => item.subBrand === aku.subBrand
+					);
+
+					if (existingSubBrand) {
+						existingSubBrand.akus.push(aku);
+					} else {
+						result.push({
+							subBrand: aku.subBrand,
+							akus: [aku]
+						});
+					}
+
+					return result;
+				},
+				[]
+			);
+
+			console.log(transformedData);
+
+			return res.status(200).json(transformedData);
 		} catch (err: any) {
 			res.status(500).json({ message: err.message });
 		}
@@ -49,7 +74,8 @@ router.get("/shopping-cart", getUser, async (req: Request, res: Response) => {
 					warranty: item.warranty,
 					dimensions: item.dimensions,
 					code: item.code,
-					inStock: item.inStock
+					inStock: item.inStock,
+					subBrand: item.subBrand
 				});
 			}
 			return acc;

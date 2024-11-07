@@ -1,14 +1,12 @@
 import { FC, useState } from "react";
-import { Product } from "../../util/types";
+import { PageData } from "../../util/types";
 import { useLoaderData } from "react-router-dom";
-import ProductGrid from "../../components/shared/ProductGrid/ProductGrid";
+import PageSections from "../../components/shared/PageSections/PageSections";
 
 const Klas: FC = () => {
-	const [products] = useState<Array<Product>>(
-		useLoaderData() as Array<Product>
-	);
+	const [data] = useState<Array<PageData>>(useLoaderData() as Array<PageData>);
 
-	return <ProductGrid products={products} />;
+	return <PageSections data={data} />;
 };
 
 export default Klas;

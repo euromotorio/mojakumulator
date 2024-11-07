@@ -49,7 +49,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 				<h3>
 					{product.name.includes("99")
 						? product.name.replace("99", "1")
-						: product.name}
+						: product.name.replace(/\b0+(\d+Ah)/, "$1")}
 				</h3>
 			</div>
 			<div>

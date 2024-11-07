@@ -14,6 +14,7 @@ export interface Aku {
 	dimensions: string;
 	code: number;
 	inStock: boolean;
+	subBrand: string;
 }
 
 export interface Address {

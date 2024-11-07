@@ -5,9 +5,9 @@
 
 .outlet {
 	width: calc(100% - 240px);
-	display: flex;
+	/* display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: center; */
 }
 
 .notification {
