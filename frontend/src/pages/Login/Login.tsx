@@ -2,7 +2,6 @@ import { TextField } from "@mui/material";
 import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import "./Login.css";
 import { UserContext, UserContextType } from "../../util/context/UserContext";
-import { useNavigate } from "react-router-dom";
 import { baseApiUrl } from "../../util/config/baseApiUrl";
 
 const Login: FC = () => {
@@ -10,8 +9,6 @@ const Login: FC = () => {
 	const [password, setPassword] = useState<string>("");
 
 	const { login } = useContext<UserContextType>(UserContext);
-
-	const redirect = useNavigate();
 
 	const setUsernameHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		setUsername(event.target.value);
@@ -42,8 +39,6 @@ const Login: FC = () => {
 			localStorage.setItem("user", JSON.stringify(loginUser));
 
 			login(loginUser);
-
-			redirect("/");
 		} catch (error) {
 			console.log(error);
 		}

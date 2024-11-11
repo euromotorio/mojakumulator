@@ -54,7 +54,12 @@ const Layout: FC = () => {
 	}, []);
 
 	useEffect(() => {
-		redirect("/");
+		const storedUser = localStorage.getItem("user");
+
+		if (!storedUser || (storedUser && location.pathname === "/login")) {
+			redirect("/");
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 

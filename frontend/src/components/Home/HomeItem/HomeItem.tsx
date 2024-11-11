@@ -9,7 +9,7 @@ interface HomeItemProps {
 const HomeItem: FC<HomeItemProps> = ({ aku }) => {
 	return (
 		<div className="home-item">
-			<div>
+			<div className="home-item-image-container">
 				<img src={aku.imgUrl} width={150} height={80} />
 			</div>
 			<div>

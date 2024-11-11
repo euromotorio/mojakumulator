@@ -12,3 +12,13 @@
 		font-weight: normal;
 	}
 }
+
+@media screen and (max-width: 768px) {
+	.home-item {
+		margin: 1.5rem 0;
+
+		& div {
+			width: 40%;
+		}
+	}
+}
