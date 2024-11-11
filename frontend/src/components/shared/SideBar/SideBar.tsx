@@ -22,19 +22,25 @@ const SideBar: FC<SideBarProps> = ({ opened }) => {
 	return (
 		<div className={`sidebar ${opened && "opened-sidebar"}`}>
 			<div className="sidebar-header">
-				<CustomLink location="/urban" text="Urban" />
-				{/* <CustomLink location="/klas" text="Klas" /> */}
-				<CustomLink location="/exide" text="Exide" />
-				<CustomLink location="/rombat" text="Rombat" />
-				<CustomLink location="/varta" text="Varta" />
+				{user && (
+					<>
+						<CustomLink location="/urban" text="Urban" />
+						<CustomLink location="/exide" text="Exide" />
+						<CustomLink location="/rombat" text="Rombat" />
+						<CustomLink location="/varta" text="Varta" />
+					</>
+				)}
 			</div>
 			<div className="sidebar-footer">
 				{user?.access === "admin" && (
 					<Link to="/admin/korisnici">Korisnici</Link>
 				)}
-				<Link to="/login" onClick={logoutHandler}>
-					Odjava
-				</Link>
+				{!user && <Link to="/login">B2B</Link>}
+				{user && (
+					<Link to="/" onClick={logoutHandler}>
+						Odjava
+					</Link>
+				)}
 			</div>
 		</div>
 	);

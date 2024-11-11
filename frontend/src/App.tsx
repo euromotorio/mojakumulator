@@ -8,6 +8,7 @@ import {
 	Outlet,
 	Route,
 	RouterProvider,
+	useLocation,
 	useNavigate
 } from "react-router-dom";
 import Urban from "./pages/Urban/Urban";
@@ -28,11 +29,13 @@ import Aku from "./pages/Aku/Aku";
 import { singleAkuLoader } from "./util/loaders/singleAkuLoader";
 import Varta from "./pages/Varta/Varta";
 import Rombat from "./pages/Rombat/Rombat";
+import Home from "./pages/Home/Home";
 // import Klas from "./pages/Klas/Klas";
 
 const Layout: FC = () => {
 	const { user, login } = useContext<UserContextType>(UserContext);
 	const { message } = useContext<NotificationContextType>(NotificationContext);
+	const location = useLocation();
 
 	const redirect = useNavigate();
 
@@ -41,15 +44,25 @@ const Layout: FC = () => {
 		if (storedUser) {
 			return login(JSON.parse(storedUser) as User);
 		}
-		redirect("/login");
+		if (location.pathname === "/") {
+			return;
+		}
+		if (location.pathname !== "/login") {
+			redirect("/login");
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		redirect("/");
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
 	return (
 		<>
-			{user && <NavBar />}
+			{location.pathname !== "/login" && <NavBar />}
 			<div className="layout">
-				{user && <SideBar />}
+				{location.pathname !== "/login" && <SideBar />}
 				<div className="notification">{message}</div>
 				<div className="outlet">
 					<Outlet />
@@ -72,6 +85,7 @@ const App: FC = () => {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
 			<Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
+				<Route path="/" element={<Home />} loader={akuLoader} />
 				<Route path="urban" element={<Urban />} loader={akuLoader} />
 				<Route path="exide" element={<Exide />} loader={akuLoader} />
 				<Route path="varta" element={<Varta />} loader={akuLoader} />

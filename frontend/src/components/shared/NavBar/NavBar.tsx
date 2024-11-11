@@ -40,10 +40,14 @@ const NavBar: FC = () => {
 			<Link to="/" className="navbar-link homepage-link">
 				MojAkumulator
 			</Link>
-			<div className="welcome">Dobrodošli, {user?.name}</div>
-			<Link to="/korpa" className="navbar-link">
-				<ShoppingCartIcon color="inherit" />
-			</Link>
+			{user && (
+				<>
+					<div className="welcome">Dobrodošli, {user?.name}</div>
+					<Link to="/korpa" className="navbar-link">
+						<ShoppingCartIcon color="inherit" />
+					</Link>
+				</>
+			)}
 		</div>
 	);
 };

@@ -1,0 +1,14 @@
+.home-item {
+	background-color: white;
+	margin: 2rem 2rem;
+	border-radius: 0.3rem;
+	padding: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	& h3 {
+		color: #103178;
+		font-weight: normal;
+	}
+}

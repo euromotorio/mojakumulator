@@ -15,39 +15,47 @@ router.get(
 	async (req: Request<{}, {}, {}, GetAllQuery>, res: Response) => {
 		const brand = req.query.brand;
 
-		try {
-			const akus = await Aku.find({
-				brand: { $regex: brand, $options: "i" }
-			}).sort({ name: 1 });
+		if (!req.query.brand) {
+			try {
+				const akus = await Aku.find({});
 
-			const transformedData = akus.reduce(
-				(
-					result: Array<{ subBrand: string; akus: Array<AkuInterface> }>,
-					aku
-				) => {
-					const existingSubBrand = result.find(
-						(item) => item.subBrand === aku.subBrand
-					);
+				return res.status(200).json(akus);
+			} catch (err: any) {
+				res.status(500).json({ message: err.message });
+			}
+		} else {
+			try {
+				const akus = await Aku.find({
+					brand: { $regex: brand, $options: "i" }
+				}).sort({ name: 1 });
 
-					if (existingSubBrand) {
-						existingSubBrand.akus.push(aku);
-					} else {
-						result.push({
-							subBrand: aku.subBrand,
-							akus: [aku]
-						});
-					}
+				const transformedData = akus.reduce(
+					(
+						result: Array<{ subBrand: string; akus: Array<AkuInterface> }>,
+						aku
+					) => {
+						const existingSubBrand = result.find(
+							(item) => item.subBrand === aku.subBrand
+						);
 
-					return result;
-				},
-				[]
-			);
+						if (existingSubBrand) {
+							existingSubBrand.akus.push(aku);
+						} else {
+							result.push({
+								subBrand: aku.subBrand,
+								akus: [aku]
+							});
+						}
 
-			console.log(transformedData);
+						return result;
+					},
+					[]
+				);
 
-			return res.status(200).json(transformedData);
-		} catch (err: any) {
-			res.status(500).json({ message: err.message });
+				return res.status(200).json(transformedData);
+			} catch (err: any) {
+				res.status(500).json({ message: err.message });
+			}
 		}
 	}
 );
