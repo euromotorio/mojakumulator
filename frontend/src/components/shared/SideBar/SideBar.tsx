@@ -25,6 +25,7 @@ const SideBar: FC<SideBarProps> = ({ opened }) => {
 				{user && (
 					<>
 						<CustomLink location="/urban" text="Urban" />
+						<CustomLink location="/klas" text="Klas" />
 						<CustomLink location="/exide" text="Exide" />
 						<CustomLink location="/rombat" text="Rombat" />
 						<CustomLink location="/varta" text="Varta" />
