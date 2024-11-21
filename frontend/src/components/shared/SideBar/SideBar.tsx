@@ -36,9 +36,9 @@ const SideBar: FC<SideBarProps> = ({ opened }) => {
 				{user?.access === "admin" && (
 					<Link to="/admin/korisnici">Korisnici</Link>
 				)}
-				{!user && <Link to="/login">B2B</Link>}
+				{/* {!user && <Link to="/login">B2B</Link>} */}
 				{user && (
-					<Link to="/" onClick={logoutHandler}>
+					<Link to="/login" onClick={logoutHandler}>
 						Odjava
 					</Link>
 				)}

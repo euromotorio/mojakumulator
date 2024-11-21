@@ -8,7 +8,6 @@ import {
 	Outlet,
 	Route,
 	RouterProvider,
-	useLocation,
 	useNavigate
 } from "react-router-dom";
 import Urban from "./pages/Urban/Urban";
@@ -29,14 +28,14 @@ import Aku from "./pages/Aku/Aku";
 import { singleAkuLoader } from "./util/loaders/singleAkuLoader";
 import Varta from "./pages/Varta/Varta";
 import Rombat from "./pages/Rombat/Rombat";
-import Home from "./pages/Home/Home";
+// import Home from "./pages/Home/Home";
 import Klas from "./pages/Klas/Klas";
 // import Klas from "./pages/Klas/Klas";
 
 const Layout: FC = () => {
 	const { user, login } = useContext<UserContextType>(UserContext);
 	const { message } = useContext<NotificationContextType>(NotificationContext);
-	const location = useLocation();
+	// const location = useLocation();
 
 	const redirect = useNavigate();
 
@@ -45,30 +44,15 @@ const Layout: FC = () => {
 		if (storedUser) {
 			return login(JSON.parse(storedUser) as User);
 		}
-		if (location.pathname === "/") {
-			return;
-		}
-		if (location.pathname !== "/login") {
-			redirect("/login");
-		}
+		redirect("/login");
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	useEffect(() => {
-		const storedUser = localStorage.getItem("user");
-
-		if (!storedUser || (storedUser && location.pathname === "/login")) {
-			redirect("/");
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
-
 	return (
 		<>
-			{location.pathname !== "/login" && <NavBar />}
+			{user && <NavBar />}
 			<div className="layout">
-				{location.pathname !== "/login" && <SideBar />}
+				{user && <SideBar />}
 				<div className="notification">{message}</div>
 				<div className="outlet">
 					<Outlet />
@@ -76,6 +60,43 @@ const Layout: FC = () => {
 			</div>
 		</>
 	);
+
+	// useEffect(() => {
+	// 	const storedUser = localStorage.getItem("user");
+	// 	if (storedUser) {
+	// 		return login(JSON.parse(storedUser) as User);
+	// 	}
+	// 	if (location.pathname === "/") {
+	// 		return;
+	// 	}
+	// 	if (location.pathname !== "/login") {
+	// 		redirect("/login");
+	// 	}
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
+
+	// useEffect(() => {
+	// 	const storedUser = localStorage.getItem("user");
+
+	// 	if (!storedUser || (storedUser && location.pathname === "/login")) {
+	// 		redirect("/");
+	// 	}
+
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [user]);
+
+	// return (
+	// 	<>
+	// 		{location.pathname !== "/login" && <NavBar />}
+	// 		<div className="layout">
+	// 			{location.pathname !== "/login" && <SideBar />}
+	// 			<div className="notification">{message}</div>
+	// 			<div className="outlet">
+	// 				<Outlet />
+	// 			</div>
+	// 		</div>
+	// 	</>
+	// );
 };
 
 const ErrorBoundary: FC = () => {
@@ -91,7 +112,7 @@ const App: FC = () => {
 	const router = createBrowserRouter(
 		createRoutesFromElements(
 			<Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
-				<Route path="/" element={<Home />} loader={akuLoader} />
+				{/* <Route path="/" element={<Home />} loader={akuLoader} /> */}
 				<Route path="urban" element={<Urban />} loader={akuLoader} />
 				<Route path="klas" element={<Klas />} loader={akuLoader} />
 				<Route path="exide" element={<Exide />} loader={akuLoader} />
