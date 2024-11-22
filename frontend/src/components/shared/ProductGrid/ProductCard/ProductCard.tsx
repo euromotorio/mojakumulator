@@ -8,6 +8,10 @@ import {
 import { baseApiUrl } from "../../../../util/config/baseApiUrl";
 import { CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
+import {
+	CartContext,
+	CartContextType
+} from "../../../../util/context/CartContext";
 
 interface ProductCardProps {
 	product: Product;
@@ -15,6 +19,8 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
 	const { user } = useContext<UserContextType>(UserContext);
+	const { addToCart } = useContext<CartContextType>(CartContext);
+
 	const [clicked, setClicked] = useState<boolean>(false);
 
 	const addToCartHandler = async (event: MouseEvent) => {
@@ -33,6 +39,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 		} finally {
 			setTimeout(() => {
 				setClicked(false);
+				addToCart();
 			}, 2000);
 		}
 	};

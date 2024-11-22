@@ -5,9 +5,13 @@
 
 .outlet {
 	width: calc(100% - 240px);
-	/* display: flex;
+}
+
+.outlet-single-product {
+	display: flex;
 	justify-content: center;
-	align-items: center; */
+	align-items: center;
+	height: calc(100vh - 100px);
 }
 
 .notification {

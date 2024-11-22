@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Request, response, Response, Router } from "express";
 import bcrypt from "bcrypt";
 import { User } from "../models/user";
 import jwt, { Secret } from "jsonwebtoken";
@@ -117,6 +117,12 @@ router.delete(
 		}
 	}
 );
+
+router.get("/cart", [getUser], async (req: Request, res: Response) => {
+	const currentUser = req.user;
+
+	return res.json(currentUser?.shoppingCart.length);
+});
 
 router.put(
 	"/cart/add/:productId",

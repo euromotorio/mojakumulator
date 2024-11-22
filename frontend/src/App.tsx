@@ -8,6 +8,7 @@ import {
 	Outlet,
 	Route,
 	RouterProvider,
+	useLocation,
 	useNavigate
 } from "react-router-dom";
 import Urban from "./pages/Urban/Urban";
@@ -30,6 +31,8 @@ import Varta from "./pages/Varta/Varta";
 import Rombat from "./pages/Rombat/Rombat";
 // import Home from "./pages/Home/Home";
 import Klas from "./pages/Klas/Klas";
+import { CartContext } from "./util/context/CartContext";
+import { baseApiUrl } from "./util/config/baseApiUrl";
 // import Klas from "./pages/Klas/Klas";
 
 const Layout: FC = () => {
@@ -39,7 +42,11 @@ const Layout: FC = () => {
 
 	const redirect = useNavigate();
 
+	const location = useLocation();
+
 	useEffect(() => {
+		console.log(location.pathname);
+
 		const storedUser = localStorage.getItem("user");
 		if (storedUser) {
 			return login(JSON.parse(storedUser) as User);
@@ -54,7 +61,12 @@ const Layout: FC = () => {
 			<div className="layout">
 				{user && <SideBar />}
 				<div className="notification">{message}</div>
-				<div className="outlet">
+				<div
+					className={`outlet ${
+						location.pathname.startsWith("/proizvodi") &&
+						"outlet-single-product"
+					}`}
+				>
 					<Outlet />
 				</div>
 			</div>
@@ -132,6 +144,7 @@ const App: FC = () => {
 
 	const [user, setUser] = useState<User | undefined>();
 	const [message, setMessage] = useState<string>("");
+	const [cartCount, setCartCount] = useState<number>(0);
 
 	const loginHandler = (userParam: User) => {
 		setUser(userParam);
@@ -149,15 +162,67 @@ const App: FC = () => {
 		}, 2000);
 	};
 
+	useEffect(() => {
+		const getCartCount = async () => {
+			if (!user?.token) return;
+
+			try {
+				const response = await fetch(`${baseApiUrl}/api/users/cart`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `bearer ${user.token}`
+					}
+				});
+
+				if (response.ok) {
+					const cartItemCount = await response.json();
+					setCartCount(cartItemCount);
+				} else {
+					console.error(
+						"Failed to fetch cart:",
+						response.status,
+						response.statusText
+					);
+				}
+			} catch (error) {
+				console.error("Error fetching cart:", error);
+			}
+		};
+
+		getCartCount();
+	}, [user]);
+
+	const addToCartHandler = () => {
+		setCartCount((prev) => prev + 1);
+	};
+
+	const removeFromCartHandler = () => {
+		setCartCount((prev) => prev - 1);
+	};
+
+	const clearCartHandler = () => {
+		setCartCount(0);
+	};
+
 	return (
 		<UserContext.Provider
 			value={{ user, login: loginHandler, logout: logoutHandler }}
 		>
-			<NotificationContext.Provider
-				value={{ message, setMessage: notificationMessageHandler }}
+			<CartContext.Provider
+				value={{
+					cartCount,
+					addToCart: addToCartHandler,
+					removeFromCart: removeFromCartHandler,
+					clearCart: clearCartHandler
+				}}
 			>
-				<RouterProvider router={router} />
-			</NotificationContext.Provider>
+				<NotificationContext.Provider
+					value={{ message, setMessage: notificationMessageHandler }}
+				>
+					<RouterProvider router={router} />
+				</NotificationContext.Provider>
+			</CartContext.Provider>
 		</UserContext.Provider>
 	);
 };

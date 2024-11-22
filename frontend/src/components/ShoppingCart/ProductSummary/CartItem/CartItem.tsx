@@ -9,6 +9,10 @@ import {
 	UserContextType
 } from "../../../../util/context/UserContext";
 import { baseApiUrl } from "../../../../util/config/baseApiUrl";
+import {
+	CartContext,
+	CartContextType
+} from "../../../../util/context/CartContext";
 
 interface CartItemProps {
 	product: ShoppingCartItem;
@@ -24,6 +28,8 @@ const CartItem: FC<CartItemProps> = ({
 	const [count, setCount] = useState<number>(product.count);
 
 	const { user } = useContext<UserContextType>(UserContext);
+	const { addToCart, removeFromCart } =
+		useContext<CartContextType>(CartContext);
 
 	const subtractHandler = async () => {
 		setCount((count) => count - 1);
@@ -35,6 +41,7 @@ const CartItem: FC<CartItemProps> = ({
 				Authorization: `bearer ${user?.token}`
 			}
 		});
+		removeFromCart();
 	};
 
 	const addHandler = async () => {
@@ -47,6 +54,8 @@ const CartItem: FC<CartItemProps> = ({
 				Authorization: `bearer ${user?.token}`
 			}
 		});
+
+		addToCart();
 	};
 
 	const emptyHandler = async () => {
