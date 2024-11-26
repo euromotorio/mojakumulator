@@ -59,7 +59,7 @@ const Login: FC = () => {
 				</p>
 				<p>
 					Dobiti ćete reklamni prostor na našoj web i Facebook stranici, te ćemo
-					vas kroz naš marketing gurati ka uspjehu.
+					vas kroz naš marketing "gurati" ka uspjehu.
 				</p>
 				<p>
 					Mi gradimo zdravu zajednicu ka velikoj budućnosti! Budite i vi dio
