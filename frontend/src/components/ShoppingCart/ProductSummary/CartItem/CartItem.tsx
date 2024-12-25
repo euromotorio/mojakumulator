@@ -79,7 +79,11 @@ const CartItem: FC<CartItemProps> = ({
 						<img src={product.imgUrl} width="150px" className="product-image" />
 					</div>
 					<div className="flex-item product-info">
-						<b>{product.name}</b>
+						<b>
+							{product.name.includes("99")
+								? product.name.replace("99", "1")
+								: product.name.replace(/\b0+(\d+Ah)/, "$1")}
+						</b>
 						<div className="quantity-control">
 							<RemoveIcon onClick={subtractHandler} className="hover-pointer" />
 							<p>{count}</p>

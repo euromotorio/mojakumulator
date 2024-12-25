@@ -44,7 +44,11 @@ const Aku: FC = () => {
 			<div className="mobile-divider"></div>
 			<div className="product-info-container">
 				<div className="product-info">
-					<h1>{aku.name}</h1>
+					<h1>
+						{aku.name.includes("99")
+							? aku.name.replace("99", "1")
+							: aku.name.replace(/\b0+(\d+Ah)/, "$1")}
+					</h1>
 					<h3>
 						<b>Dimenzije: </b>
 						{aku.dimensions}

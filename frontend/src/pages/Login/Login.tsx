@@ -51,7 +51,7 @@ const Login: FC = () => {
 
 	return (
 		<div className="form-container">
-			<div className="form-tooltip">
+			{/* <div className="form-tooltip">
 				<p>Dobrodošli u naš B2B sistem.</p>
 				<p>
 					Ukoliko želite da postanete naš saradnik i partner u biznisu
@@ -65,7 +65,7 @@ const Login: FC = () => {
 					Mi gradimo zdravu zajednicu ka velikoj budućnosti! Budite i vi dio
 					novog pokreta u biznisu i unaprijedite vase poslovanje.
 				</p>
-			</div>
+			</div> */}
 			<form className="login-form" onSubmit={loginHandler}>
 				<TextField
 					variant="outlined"
