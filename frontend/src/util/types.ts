@@ -5,6 +5,7 @@ export interface Product {
 	imgUrl: string;
 	name: string;
 	price: number;
+	b2cPrice?: number;
 	brand: Brand;
 	dimensions: string;
 	warranty: number;
@@ -22,8 +23,16 @@ export interface User {
 	access: UserAccessLevel | "";
 }
 
+export interface ReturningProduct {
+	vehicle: string;
+	productionYear: number;
+	engineVolume: number;
+	startStop: boolean;
+}
+
 export interface ShoppingCartItem extends Product {
 	count: number;
+	returningProduct?: ReturningProduct;
 }
 
 export interface ShoppingCart {

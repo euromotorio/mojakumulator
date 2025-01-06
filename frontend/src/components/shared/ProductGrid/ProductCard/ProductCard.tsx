@@ -46,7 +46,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
 	return (
 		<Link
-			to={`/proizvodi/${product.id}`}
+			to={`/proizvodi/${product.id}${!user && "?b2c=true"}`}
 			className={`card ${!product.inStock && "card-disabled"}`}
 		>
 			{!product.inStock && <div className="card-overlay">Nema na stanju</div>}
@@ -60,7 +60,9 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 				</h3>
 			</div>
 			<div>
-				<b>{product.price.toFixed(2)}KM</b>
+				<b>
+					{user ? product.price.toFixed(2) : product.b2cPrice?.toFixed(2)}KM
+				</b>
 				<button
 					onClick={addToCartHandler}
 					disabled={clicked}
@@ -68,6 +70,15 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 				>
 					{clicked ? <CircularProgress size="1em" /> : "Dodaj u korpu"}
 				</button>
+				{!user && (
+					<button
+						onClick={addToCartHandler}
+						disabled={clicked}
+						className={`${clicked && "clicked"} add-to-cart-button`}
+					>
+						{clicked ? <CircularProgress size="1em" /> : "Dodaj uz povrat"}
+					</button>
+				)}
 			</div>
 		</Link>
 	);

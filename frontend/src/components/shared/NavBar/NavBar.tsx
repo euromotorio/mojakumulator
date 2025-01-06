@@ -61,19 +61,19 @@ const NavBar: FC = () => {
 					onClick={() => setOpenSidebar((sidebarState) => !sidebarState)}
 				/>
 			)}
-			<Link to="/" className="navbar-link homepage-link">
+			<Link
+				to={`/${!user && "?b2c=true"}`}
+				className="navbar-link homepage-link"
+			>
 				MojAkumulator
 			</Link>
-			{user && (
-				<>
-					<div className="welcome">Dobrodošli, {user?.name}</div>
-					<Link to="/korpa" className="navbar-link">
-						<Badge badgeContent={cartCount}>
-							<ShoppingCartIcon color="inherit" />
-						</Badge>
-					</Link>
-				</>
-			)}
+
+			<div className="welcome">Dobrodošli {user?.name}</div>
+			<Link to={`/korpa${!user && "?b2c=true"}`} className="navbar-link">
+				<Badge badgeContent={cartCount}>
+					<ShoppingCartIcon color="inherit" />
+				</Badge>
+			</Link>
 		</div>
 	);
 };

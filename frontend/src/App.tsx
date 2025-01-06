@@ -9,7 +9,8 @@ import {
 	Route,
 	RouterProvider,
 	useLocation,
-	useNavigate
+	useNavigate,
+	useSearchParams
 } from "react-router-dom";
 import Urban from "./pages/Urban/Urban";
 import "./App.css";
@@ -36,7 +37,7 @@ import { baseApiUrl } from "./util/config/baseApiUrl";
 // import Klas from "./pages/Klas/Klas";
 
 const Layout: FC = () => {
-	const { user, login } = useContext<UserContextType>(UserContext);
+	const { login } = useContext<UserContextType>(UserContext);
 	const { message } = useContext<NotificationContextType>(NotificationContext);
 	// const location = useLocation();
 
@@ -44,12 +45,17 @@ const Layout: FC = () => {
 
 	const location = useLocation();
 
-	useEffect(() => {
-		console.log(location.pathname);
+	const [searchParams] = useSearchParams();
+	const isB2C = searchParams.get("b2c");
 
+	useEffect(() => {
 		const storedUser = localStorage.getItem("user");
 		if (storedUser) {
 			return login(JSON.parse(storedUser) as User);
+		}
+
+		if (isB2C) {
+			return;
 		}
 		redirect("/login");
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,9 +63,9 @@ const Layout: FC = () => {
 
 	return (
 		<>
-			{user && <NavBar />}
+			{location.pathname !== "/login" && <NavBar />}
 			<div className="layout">
-				{user && <SideBar />}
+				{location.pathname !== "/login" && <SideBar />}
 				<div className="notification">{message}</div>
 				<div
 					className={`outlet ${
@@ -112,10 +118,13 @@ const Layout: FC = () => {
 };
 
 const ErrorBoundary: FC = () => {
+	const [searchParams] = useSearchParams();
+	const isB2C = searchParams.get("b2c");
+
 	return (
 		<div>
 			<div>Došlo je do greške.</div>
-			<Link to="/">Nazad na početnu stranicu.</Link>
+			<Link to={`/${isB2C && "?b2c=true"}`}>Nazad na početnu stranicu.</Link>
 		</div>
 	);
 };
