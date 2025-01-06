@@ -1,5 +1,5 @@
 import { FC, MouseEvent, useContext, useState } from "react";
-import { Product } from "../../../../util/types";
+import { ShoppingCart, ShoppingCartItem } from "../../../../util/types";
 import "./ProductCard.css";
 import {
 	UserContext,
@@ -14,10 +14,11 @@ import {
 } from "../../../../util/context/CartContext";
 
 interface ProductCardProps {
-	product: Product;
+	product: ShoppingCartItem;
+	onModalOpen: (id: string) => void;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product }) => {
+const ProductCard: FC<ProductCardProps> = ({ product, onModalOpen }) => {
 	const { user } = useContext<UserContextType>(UserContext);
 	const { addToCart } = useContext<CartContextType>(CartContext);
 
@@ -25,6 +26,40 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
 	const addToCartHandler = async (event: MouseEvent) => {
 		event.preventDefault();
+
+		if (!user) {
+			setClicked(true);
+			const storedCart = localStorage.getItem("mojakumulator-cart");
+			const cart: ShoppingCart = storedCart
+				? JSON.parse(storedCart)
+				: { products: [], sum: 0 };
+
+			const existingProductIndex = cart.products.findIndex(
+				(item) =>
+					item.id === product.id &&
+					(!item.returningProduct ||
+						JSON.stringify(item.returningProduct) ===
+							JSON.stringify(product.returningProduct))
+			);
+
+			if (existingProductIndex > -1) {
+				cart.products[existingProductIndex].count += 1;
+			} else {
+				cart.products.push({ ...product, count: 1 });
+			}
+
+			cart.sum += product.b2cPrice!;
+
+			localStorage.setItem("mojakumulator-cart", JSON.stringify(cart));
+
+			setTimeout(() => {
+				setClicked(false);
+			}, 2000);
+
+			addToCart();
+
+			return;
+		}
 
 		try {
 			await fetch(`${baseApiUrl}/api/users/cart/add/${product.id}`, {
@@ -44,9 +79,14 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 		}
 	};
 
+	const discountHandler = (event: MouseEvent) => {
+		event.preventDefault();
+		onModalOpen(product.id);
+	};
+
 	return (
 		<Link
-			to={`/proizvodi/${product.id}${!user && "?b2c=true"}`}
+			to={`/proizvodi/${product.id}${!user ? "?b2c=true" : ""}`}
 			className={`card ${!product.inStock && "card-disabled"}`}
 		>
 			{!product.inStock && <div className="card-overlay">Nema na stanju</div>}
@@ -72,11 +112,10 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 				</button>
 				{!user && (
 					<button
-						onClick={addToCartHandler}
-						disabled={clicked}
 						className={`${clicked && "clicked"} add-to-cart-button`}
+						onClick={discountHandler}
 					>
-						{clicked ? <CircularProgress size="1em" /> : "Dodaj uz povrat"}
+						Dodaj uz povrat
 					</button>
 				)}
 			</div>

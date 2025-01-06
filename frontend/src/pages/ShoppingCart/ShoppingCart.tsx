@@ -14,6 +14,26 @@ const ShoppingCart: FC = () => {
 
 	useEffect(() => {
 		const fetchCart = async () => {
+			if (!user) {
+				const storedCart = localStorage.getItem("mojakumulator-cart");
+				if (!storedCart) {
+					const initialCart = { products: [], sum: 0 };
+					localStorage.setItem(
+						"mojakumulator-cart",
+						JSON.stringify(initialCart)
+					);
+					setProducts(initialCart);
+					return;
+				}
+
+				const cart = JSON.parse(storedCart);
+				setTimeout(() => {
+					setProducts(cart);
+				}, 1000);
+
+				return;
+			}
+
 			const userToken = JSON.parse(localStorage.getItem("user")!).token;
 
 			const response = await fetch(`${baseApiUrl}/api/akus/shopping-cart`, {
@@ -34,7 +54,7 @@ const ShoppingCart: FC = () => {
 		};
 
 		fetchCart();
-	}, []);
+	}, [user]);
 
 	const orderHandler = async (sum: number) => {
 		const userToken = JSON.parse(localStorage.getItem("user")!).token;
@@ -85,9 +105,30 @@ const ShoppingCart: FC = () => {
 		});
 	};
 
+	const removeProductFromCart = (productId: string) => {
+		setProducts((prevState) => {
+			if (!prevState) return prevState;
+
+			const updatedProducts = prevState.products.filter(
+				(product) => product.id !== productId
+			);
+			const updatedSum = updatedProducts.reduce(
+				(sum, product) =>
+					sum + (user ? product.price : product.b2cPrice!) * product.count,
+				0
+			);
+
+			return { ...prevState, products: updatedProducts, sum: updatedSum };
+		});
+	};
+
 	return (
 		<div className="shopping-cart">
-			<ProductSummary cart={products} onOrder={orderHandler} />
+			<ProductSummary
+				cart={products}
+				onOrder={orderHandler}
+				onRemoveProduct={removeProductFromCart}
+			/>
 		</div>
 	);
 };

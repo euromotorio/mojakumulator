@@ -17,7 +17,7 @@ import "./App.css";
 import Exide from "./pages/Exide/Exide";
 import { akuLoader } from "./util/loaders/akuLoader";
 import { UserContext, UserContextType } from "./util/context/UserContext";
-import { User } from "./util/types";
+import { ShoppingCart as ShoppingCartType, User } from "./util/types";
 import Login from "./pages/Login/Login";
 import Users from "./pages/Users/Users";
 import { userLoader } from "./util/loaders/userLoader";
@@ -124,7 +124,9 @@ const ErrorBoundary: FC = () => {
 	return (
 		<div>
 			<div>Došlo je do greške.</div>
-			<Link to={`/${isB2C && "?b2c=true"}`}>Nazad na početnu stranicu.</Link>
+			<Link to={`/${isB2C ? "?b2c=true" : ""}`}>
+				Nazad na početnu stranicu.
+			</Link>
 		</div>
 	);
 };
@@ -172,8 +174,30 @@ const App: FC = () => {
 	};
 
 	useEffect(() => {
+		if (user) {
+			return;
+		}
+
+		const storedCart = localStorage.getItem("mojakumulator-cart")!;
+
+		if (!storedCart) {
+			localStorage.setItem(
+				"mojakumulator-cart",
+				JSON.stringify({ products: [], sum: 0 })
+			);
+		}
+
+		const cart = JSON.parse(storedCart) as ShoppingCartType;
+
+		return setCartCount(cart ? cart.products.length : 0);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
 		const getCartCount = async () => {
-			if (!user?.token) return;
+			if (!user?.token) {
+				return;
+			}
 
 			try {
 				const response = await fetch(`${baseApiUrl}/api/users/cart`, {
@@ -206,12 +230,8 @@ const App: FC = () => {
 		setCartCount((prev) => prev + 1);
 	};
 
-	const removeFromCartHandler = () => {
-		setCartCount((prev) => prev - 1);
-	};
-
-	const clearCartHandler = () => {
-		setCartCount(0);
+	const removeFromCartHandler = (removedCount: number) => {
+		setCartCount((prev) => prev - removedCount);
 	};
 
 	return (
@@ -222,8 +242,7 @@ const App: FC = () => {
 				value={{
 					cartCount,
 					addToCart: addToCartHandler,
-					removeFromCart: removeFromCartHandler,
-					clearCart: clearCartHandler
+					removeFromCart: removeFromCartHandler
 				}}
 			>
 				<NotificationContext.Provider

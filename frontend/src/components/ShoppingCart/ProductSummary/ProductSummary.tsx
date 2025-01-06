@@ -7,9 +7,14 @@ import CartItem from "./CartItem/CartItem";
 interface ProductSummaryProps {
 	cart: ShoppingCart | undefined;
 	onOrder: (value: number) => void;
+	onRemoveProduct: (id: string) => void;
 }
 
-const ProductSummary: FC<ProductSummaryProps> = ({ cart, onOrder }) => {
+const ProductSummary: FC<ProductSummaryProps> = ({
+	cart,
+	onOrder,
+	onRemoveProduct
+}) => {
 	const [cartSum, setCartSum] = useState<number>(cart ? cart.sum : 0);
 
 	useEffect(() => {
@@ -35,6 +40,7 @@ const ProductSummary: FC<ProductSummaryProps> = ({ cart, onOrder }) => {
 							onCartSubtract={(value) =>
 								setCartSum((prevSum) => prevSum - value)
 							}
+							onRemoveProduct={onRemoveProduct}
 						/>
 					))}
 				</div>

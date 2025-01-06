@@ -47,11 +47,23 @@ const SideBar: FC<SideBarProps> = ({ opened, onClickOutside }) => {
 	return (
 		<div className={`sidebar ${opened && "opened-sidebar"}`} ref={sidebarRef}>
 			<div className="sidebar-header">
-				<CustomLink location={`/urban${!user && "?b2c=true"}`} text="Urban" />
-				<CustomLink location={`/klas${!user && "?b2c=true"}`} text="Klas" />
-				<CustomLink location={`/exide${!user && "?b2c=true"}`} text="Exide" />
-				<CustomLink location={`/rombat${!user && "?b2c=true"}`} text="Rombat" />
-				<CustomLink location={`/varta${!user && "?b2c=true"}`} text="Varta" />
+				<CustomLink
+					location={`/urban${!user ? "?b2c=true" : ""}`}
+					text="Urban"
+				/>
+				<CustomLink location={`/klas${!user ? "?b2c=true" : ""}`} text="Klas" />
+				<CustomLink
+					location={`/exide${!user ? "?b2c=true" : ""}`}
+					text="Exide"
+				/>
+				<CustomLink
+					location={`/rombat${!user ? "?b2c=true" : ""}`}
+					text="Rombat"
+				/>
+				<CustomLink
+					location={`/varta${!user ? "?b2c=true" : ""}`}
+					text="Varta"
+				/>
 			</div>
 			<div className="sidebar-footer">
 				{user?.access === "admin" && (

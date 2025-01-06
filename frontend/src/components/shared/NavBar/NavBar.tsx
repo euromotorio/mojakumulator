@@ -69,7 +69,7 @@ const NavBar: FC = () => {
 			</Link>
 
 			<div className="welcome">Dobrodošli {user?.name}</div>
-			<Link to={`/korpa${!user && "?b2c=true"}`} className="navbar-link">
+			<Link to={`/korpa${!user ? "?b2c=true" : ""}`} className="navbar-link">
 				<Badge badgeContent={cartCount}>
 					<ShoppingCartIcon color="inherit" />
 				</Badge>

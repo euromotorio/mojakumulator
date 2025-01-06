@@ -27,7 +27,7 @@ export interface ReturningProduct {
 	vehicle: string;
 	productionYear: number;
 	engineVolume: number;
-	startStop: boolean;
+	startStop: "Da" | "Ne";
 }
 
 export interface ShoppingCartItem extends Product {
@@ -36,7 +36,7 @@ export interface ShoppingCartItem extends Product {
 }
 
 export interface ShoppingCart {
-	products: Array<ShoppingCartItem> | [];
+	products: Array<ShoppingCartItem>;
 	sum: number;
 }
 

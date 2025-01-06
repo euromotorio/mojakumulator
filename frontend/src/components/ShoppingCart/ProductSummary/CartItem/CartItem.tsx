@@ -18,12 +18,14 @@ interface CartItemProps {
 	product: ShoppingCartItem;
 	onCartSubtract: (value: number) => void;
 	onCartAdd: (value: number) => void;
+	onRemoveProduct: (id: string) => void;
 }
 
 const CartItem: FC<CartItemProps> = ({
 	product,
 	onCartAdd,
-	onCartSubtract
+	onCartSubtract,
+	onRemoveProduct
 }) => {
 	const [count, setCount] = useState<number>(product.count);
 
@@ -31,21 +33,29 @@ const CartItem: FC<CartItemProps> = ({
 	const { addToCart, removeFromCart } =
 		useContext<CartContextType>(CartContext);
 
-	const subtractHandler = async () => {
-		setCount((count) => count - 1);
-		onCartSubtract(product.price);
-
-		await fetch(`${baseApiUrl}/api/users/cart/remove/${product.id}`, {
-			method: "PUT",
-			headers: {
-				Authorization: `bearer ${user?.token}`
-			}
-		});
-		removeFromCart();
-	};
-
 	const addHandler = async () => {
 		setCount((count) => count + 1);
+
+		if (!user) {
+			const storedCart = JSON.parse(
+				localStorage.getItem("mojakumulator-cart")!
+			);
+			const existingProductIndex = storedCart.products.findIndex(
+				(p: ShoppingCartItem) => p.id === product.id && !p.returningProduct
+			);
+
+			if (existingProductIndex > -1) {
+				storedCart.products[existingProductIndex].count += 1;
+			} else {
+				storedCart.products.push({ ...product, count: 1 });
+			}
+
+			storedCart.sum += product.b2cPrice!;
+			onCartAdd(product.b2cPrice!);
+			localStorage.setItem("mojakumulator-cart", JSON.stringify(storedCart));
+			return;
+		}
+
 		onCartAdd(product.price);
 
 		await fetch(`${baseApiUrl}/api/users/cart/add/${product.id}`, {
@@ -58,9 +68,78 @@ const CartItem: FC<CartItemProps> = ({
 		addToCart();
 	};
 
+	const subtractHandler = async () => {
+		if (!user) {
+			const storedCart = JSON.parse(
+				localStorage.getItem("mojakumulator-cart")!
+			);
+			const existingProductIndex = storedCart.products.findIndex(
+				(p: ShoppingCartItem) => p.id === product.id && !p.returningProduct
+			);
+
+			if (existingProductIndex > -1) {
+				const existingProduct = storedCart.products[existingProductIndex];
+				if (existingProduct.count > 1) {
+					existingProduct.count -= 1;
+				} else {
+					storedCart.products.splice(existingProductIndex, 1);
+				}
+				if (existingProduct.count === 1) {
+					onRemoveProduct(product.id);
+				}
+				storedCart.sum -= product.b2cPrice!;
+				localStorage.setItem("mojakumulator-cart", JSON.stringify(storedCart));
+			}
+
+			setCount((count) => Math.max(count - 1, 0));
+			onCartSubtract(product.b2cPrice!);
+			removeFromCart(count);
+			return;
+		}
+
+		setCount((count) => count - 1);
+		onCartSubtract(product.price);
+		if (count === 1) {
+			onRemoveProduct(product.id);
+		}
+
+		await fetch(`${baseApiUrl}/api/users/cart/remove/${product.id}`, {
+			method: "PUT",
+			headers: {
+				Authorization: `bearer ${user?.token}`
+			}
+		});
+
+		removeFromCart(count);
+	};
+
 	const emptyHandler = async () => {
+		if (!user) {
+			const storedCart = JSON.parse(
+				localStorage.getItem("mojakumulator-cart")!
+			);
+			const existingProductIndex = storedCart.products.findIndex(
+				(p: ShoppingCartItem) => p.id === product.id && !p.returningProduct
+			);
+
+			if (existingProductIndex > -1) {
+				const existingProduct = storedCart.products[existingProductIndex];
+				storedCart.sum -= existingProduct.b2cPrice! * existingProduct.count;
+				storedCart.products.splice(existingProductIndex, 1);
+				localStorage.setItem("mojakumulator-cart", JSON.stringify(storedCart));
+			}
+
+			setCount(0);
+			onCartSubtract(product.b2cPrice! * count);
+			onRemoveProduct(product.id);
+			removeFromCart(count);
+			return;
+		}
+
 		setCount(0);
 		onCartSubtract(product.price * count);
+		removeFromCart(count);
+		onRemoveProduct(product.id);
 
 		await fetch(`${baseApiUrl}/api/users/cart/clear/${product.id}`, {
 			method: "PUT",
@@ -75,7 +154,9 @@ const CartItem: FC<CartItemProps> = ({
 			{count !== 0 && (
 				<>
 					<div className="flex-item">
-						<p className="price-per-product">{product.price * count}KM</p>
+						<p className="price-per-product">
+							{user ? product.price * count : product.b2cPrice! * count}KM
+						</p>
 						<img src={product.imgUrl} width="150px" className="product-image" />
 					</div>
 					<div className="flex-item product-info">
