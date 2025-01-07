@@ -42,5 +42,5 @@ export interface ShoppingCart {
 
 export interface PageData {
 	subBrand: string;
-	akus: Array<Product>;
+	akus: Array<ShoppingCartItem>;
 }
