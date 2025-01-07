@@ -6,11 +6,20 @@ import "./ShoppingCart.css";
 import { baseApiUrl } from "../../util/config/baseApiUrl";
 import emailjs from "@emailjs/browser";
 import emailjsIds from "../../util/config/emailjsIds";
+import CheckoutForm, {
+	CheckoutData as CheckoutDataType
+} from "../../components/ShoppingCart/CheckoutForm/CheckoutForm";
+import { CartContext, CartContextType } from "../../util/context/CartContext";
 
 const ShoppingCart: FC = () => {
 	const [products, setProducts] = useState<ShoppingCartType>();
+	const [checkoutReady, setCheckoutReady] = useState<boolean>(false);
+	const [checkoutDataB2C, setCheckoutDataB2C] = useState<CheckoutDataType>();
+	const [formResetKey, setFormResetKey] = useState<number>(0);
 
 	const { user } = useContext<UserContextType>(UserContext);
+	const { cartCount, removeFromCart } =
+		useContext<CartContextType>(CartContext);
 
 	useEffect(() => {
 		const fetchCart = async () => {
@@ -56,7 +65,61 @@ const ShoppingCart: FC = () => {
 		fetchCart();
 	}, [user]);
 
+	const checkoutReadyHandler = (value: boolean) => {
+		setCheckoutReady(value);
+	};
+
 	const orderHandler = async (sum: number) => {
+		if (!user) {
+			const templateParams = {
+				user_name: "Nema naloga",
+				products: products?.products.map((product) => ({
+					product_name: product.name,
+					quantity: product.count,
+					price: product.b2cPrice,
+					code: product.code,
+					returning_product: product.returningProduct || null
+				})),
+				total_price: sum,
+				name: checkoutDataB2C!.name[0],
+				surname: checkoutDataB2C!.name[1],
+				address: checkoutDataB2C!.street,
+				city: checkoutDataB2C!.city,
+				zip: checkoutDataB2C!.zipCode,
+				phone: checkoutDataB2C!.phone
+			};
+
+			emailjs
+				.send(emailjsIds.serviceId, emailjsIds.templateId, templateParams, {
+					publicKey: emailjsIds.publicKey
+				})
+				.then(
+					() => {
+						setProducts({ products: [], sum: 0 });
+					},
+					(error) => {
+						console.log("FAILED...", error);
+					}
+				);
+
+			setFormResetKey((prevKey) => prevKey + 1);
+
+			localStorage.removeItem("mojakumulator-cart");
+
+			setCheckoutDataB2C({
+				name: "",
+				surname: "",
+				city: "",
+				phone: "",
+				street: "",
+				zipCode: ""
+			});
+
+			removeFromCart(cartCount);
+
+			return;
+		}
+
 		const userToken = JSON.parse(localStorage.getItem("user")!).token;
 
 		const response = await fetch(`${baseApiUrl}/api/users/address`, {
@@ -124,10 +187,20 @@ const ShoppingCart: FC = () => {
 
 	return (
 		<div className="shopping-cart">
+			{!user && (
+				<CheckoutForm
+					key={formResetKey}
+					onCheckoutReady={checkoutReadyHandler}
+					onCheckoutChange={(value: CheckoutDataType) =>
+						setCheckoutDataB2C(value)
+					}
+				/>
+			)}
 			<ProductSummary
 				cart={products}
 				onOrder={orderHandler}
 				onRemoveProduct={removeProductFromCart}
+				cartReady={checkoutReady}
 			/>
 		</div>
 	);

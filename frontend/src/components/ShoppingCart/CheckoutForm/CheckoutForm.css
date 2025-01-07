@@ -1,0 +1,40 @@
+.checkout-form {
+	background-color: white;
+	padding: 2rem;
+	height: calc(500px - 2rem);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	width: 660px;
+}
+
+.checkout-text-fields {
+	display: flex;
+	flex-direction: column;
+	height: 80%;
+	padding: 3rem 0 0 0;
+	justify-content: space-between;
+
+	& div {
+		display: flex;
+		justify-content: space-between;
+
+		& div {
+			margin: 0 0.2rem;
+			width: 100%;
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.checkout-form {
+		min-width: 0;
+		width: 80vw;
+	}
+}
+
+@media screen and (max-width: 1700px) {
+	.checkout-form {
+		margin: 0 0 2rem 0;
+	}
+}

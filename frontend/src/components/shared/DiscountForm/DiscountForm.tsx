@@ -37,8 +37,8 @@ const DiscountForm: FC<DiscountFormProps> = ({
 
 		onSubmitDiscount({
 			vehicle: carBrand,
-			productionYear,
-			engineVolume,
+			productionYear: productionYear!,
+			engineVolume: engineVolume!,
 			startStop: startStop == "1" ? "Da" : "Ne"
 		});
 	};

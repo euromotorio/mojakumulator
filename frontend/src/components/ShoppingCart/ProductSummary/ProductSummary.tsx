@@ -1,21 +1,29 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import "./ProductSummary.css";
 import { ShoppingCart } from "../../../util/types";
 import { CircularProgress } from "@mui/material";
 import CartItem from "./CartItem/CartItem";
+import {
+	UserContext,
+	UserContextType
+} from "../../../util/context/UserContext";
 
 interface ProductSummaryProps {
 	cart: ShoppingCart | undefined;
 	onOrder: (value: number) => void;
 	onRemoveProduct: (id: string) => void;
+	cartReady: boolean;
 }
 
 const ProductSummary: FC<ProductSummaryProps> = ({
 	cart,
 	onOrder,
-	onRemoveProduct
+	onRemoveProduct,
+	cartReady
 }) => {
 	const [cartSum, setCartSum] = useState<number>(cart ? cart.sum : 0);
+
+	const { user } = useContext<UserContextType>(UserContext);
 
 	useEffect(() => {
 		if (cart) {
@@ -54,8 +62,10 @@ const ProductSummary: FC<ProductSummaryProps> = ({
 					Gotovina: {cartSum ? cartSum.toFixed(2) : (0).toFixed(2)}KM
 				</p>
 				<button
-					disabled={cartSum === 0}
-					className={`${cartSum === 0 && "disabled-button"}`}
+					disabled={(!user && !cartReady) || cartSum === 0}
+					className={`${
+						(cartSum === 0 || (!user && !cartReady)) && "disabled-button"
+					}`}
 					onClick={orderHandler}
 				>
 					Naruči
