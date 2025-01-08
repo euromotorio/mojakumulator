@@ -52,7 +52,10 @@ const DiscountForm: FC<DiscountFormProps> = ({
 				}
 				onSubmit={submitFormHandler}
 			>
-				<h3>Unesite detalje vozila akumulatora kojeg vraćate</h3>
+				<h3>
+					Molimo da nam upisete podatke o vozilu kako bi pravilno ispunili
+					garantni list
+				</h3>
 				<TextField
 					label="Marka vozila"
 					required

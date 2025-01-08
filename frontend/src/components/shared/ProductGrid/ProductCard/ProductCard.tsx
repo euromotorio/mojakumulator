@@ -6,7 +6,7 @@ import {
 	UserContextType
 } from "../../../../util/context/UserContext";
 import { baseApiUrl } from "../../../../util/config/baseApiUrl";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
 	CartContext,
@@ -16,13 +16,19 @@ import {
 interface ProductCardProps {
 	product: ShoppingCartItem;
 	onModalOpen: (id: string) => void;
+	onMakeDiscounted: (value: boolean) => void;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product, onModalOpen }) => {
+const ProductCard: FC<ProductCardProps> = ({
+	product,
+	onModalOpen,
+	onMakeDiscounted
+}) => {
 	const { user } = useContext<UserContextType>(UserContext);
 	const { addToCart } = useContext<CartContextType>(CartContext);
 
 	const [clicked, setClicked] = useState<boolean>(false);
+	const [productPrice, setProductPrice] = useState<number>(product.b2cPrice!);
 
 	const addToCartHandler = async (event: MouseEvent) => {
 		event.preventDefault();
@@ -82,6 +88,13 @@ const ProductCard: FC<ProductCardProps> = ({ product, onModalOpen }) => {
 	const discountHandler = (event: MouseEvent) => {
 		event.preventDefault();
 		onModalOpen(product.id);
+		onMakeDiscounted(false);
+	};
+
+	const realDiscountHandler = (event: MouseEvent) => {
+		event.preventDefault();
+		discountHandler(event);
+		onMakeDiscounted(true);
 	};
 
 	return (
@@ -89,7 +102,9 @@ const ProductCard: FC<ProductCardProps> = ({ product, onModalOpen }) => {
 			to={`/proizvodi/${product.id}${!user ? "?b2c=true" : ""}`}
 			className={`card ${!product.inStock && "card-disabled"}`}
 		>
-			{!product.inStock && <div className="card-overlay">Nema na stanju</div>}
+			{!product.inStock && user && (
+				<div className="card-overlay">Nema na stanju</div>
+			)}
 			<div>
 				<img src={product.imgUrl} width={250} />
 				<hr />
@@ -100,23 +115,25 @@ const ProductCard: FC<ProductCardProps> = ({ product, onModalOpen }) => {
 				</h3>
 			</div>
 			<div>
-				<b>
-					{user ? product.price.toFixed(2) : product.b2cPrice?.toFixed(2)}KM
-				</b>
+				<b>{user ? product.price.toFixed(2) : productPrice.toFixed(2)}KM</b>
 				<button
-					onClick={addToCartHandler}
+					onClick={user ? addToCartHandler : discountHandler}
 					disabled={clicked}
 					className={`${clicked && "clicked"} add-to-cart-button`}
 				>
 					{clicked ? <CircularProgress size="1em" /> : "Dodaj u korpu"}
 				</button>
 				{!user && (
-					<button
-						className={`${clicked && "clicked"} add-to-cart-button`}
-						onClick={discountHandler}
-					>
-						Dodaj uz povrat
-					</button>
+					<Tooltip title="Ostvarite popust od 10% uz povratak starog akumulatora">
+						<button
+							className={`${clicked && "clicked"} add-to-cart-button`}
+							onClick={realDiscountHandler}
+							onMouseEnter={() => setProductPrice(product.b2cPrice! * 0.9)}
+							onMouseLeave={() => setProductPrice(product.b2cPrice!)}
+						>
+							Kupi uz povrat akumulatora
+						</button>
+					</Tooltip>
 				)}
 			</div>
 		</Link>

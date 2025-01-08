@@ -17,6 +17,7 @@ const ProductGrid: FC<ProductGridProps> = ({ products }) => {
 	const [selectedProductId, setSelectedProductId] = useState<string | null>(
 		null
 	);
+	const [discountIsActive, setDiscountIsActive] = useState<boolean>(false);
 
 	const { addToCart } = useContext<CartContextType>(CartContext);
 
@@ -42,7 +43,9 @@ const ProductGrid: FC<ProductGridProps> = ({ products }) => {
 		if (selectedProductId) {
 			const product = products.find((p) => p.id === selectedProductId);
 			if (product) {
-				const discountedPrice = product.b2cPrice! * 0.9;
+				const discountedPrice = discountIsActive
+					? product.b2cPrice! * 0.9
+					: product.b2cPrice;
 
 				const storedCart = JSON.parse(
 					localStorage.getItem("mojakumulator-cart") ||
@@ -81,6 +84,10 @@ const ProductGrid: FC<ProductGridProps> = ({ products }) => {
 		}
 	};
 
+	const discountActivationHandler = (value: boolean) => {
+		setDiscountIsActive(value);
+	};
+
 	return (
 		<div className="product-grid">
 			{products.map((product) => (
@@ -88,6 +95,7 @@ const ProductGrid: FC<ProductGridProps> = ({ products }) => {
 					product={product}
 					key={product.id}
 					onModalOpen={modalOpenHandler}
+					onMakeDiscounted={discountActivationHandler}
 				/>
 			))}
 			{isModalOpen && (

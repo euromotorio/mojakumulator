@@ -32,7 +32,8 @@ export interface ReturningProduct {
 
 export interface ShoppingCartItem extends Product {
 	count: number;
-	returningProduct?: ReturningProduct;
+	returningProduct: ReturningProduct;
+	isDiscounted: boolean;
 }
 
 export interface ShoppingCart {

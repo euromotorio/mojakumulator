@@ -43,7 +43,7 @@ const ProductSummary: FC<ProductSummaryProps> = ({
 					{cart.products?.map((product) => (
 						<CartItem
 							product={product}
-							key={product.id}
+							key={product.id + product.b2cPrice}
 							onCartAdd={(value) => setCartSum((prevSum) => prevSum + value)}
 							onCartSubtract={(value) =>
 								setCartSum((prevSum) => prevSum - value)

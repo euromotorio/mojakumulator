@@ -119,7 +119,7 @@ const CartItem: FC<CartItemProps> = ({
 				localStorage.getItem("mojakumulator-cart")!
 			);
 			const existingProductIndex = storedCart.products.findIndex(
-				(p: ShoppingCartItem) => p.id === product.id && !p.returningProduct
+				(p: ShoppingCartItem) => p.id === product.id
 			);
 
 			if (existingProductIndex > -1) {
@@ -166,9 +166,16 @@ const CartItem: FC<CartItemProps> = ({
 								: product.name.replace(/\b0+(\d+Ah)/, "$1")}
 						</b>
 						<div className="quantity-control">
-							<RemoveIcon onClick={subtractHandler} className="hover-pointer" />
+							{user && (
+								<RemoveIcon
+									onClick={subtractHandler}
+									className="hover-pointer"
+								/>
+							)}
 							<p>{count}</p>
-							<AddIcon onClick={addHandler} className="hover-pointer" />
+							{user && (
+								<AddIcon onClick={addHandler} className="hover-pointer" />
+							)}
 						</div>
 					</div>
 					<div className="delete-button">
