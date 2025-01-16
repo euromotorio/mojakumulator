@@ -39,12 +39,21 @@ const akuSchema = new mongoose.Schema<AkuInterface>({
 		required: true,
 		unique: true
 	},
+	b2cCode: {
+		type: Number,
+		required: true,
+		unique: true
+	},
 	inStock: {
 		type: Boolean,
 		required: true
 	},
 	subBrand: {
 		type: String,
+		required: true
+	},
+	b2cPrice: {
+		type: Number,
 		required: true
 	}
 });

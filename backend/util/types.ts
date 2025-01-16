@@ -13,8 +13,10 @@ export interface Aku {
 	warranty: number;
 	dimensions: string;
 	code: number;
+	b2cCode: number;
 	inStock: boolean;
 	subBrand: string;
+	b2cPrice: number;
 }
 
 export interface Address {

@@ -10,6 +10,7 @@ export interface Product {
 	dimensions: string;
 	warranty: number;
 	code: number;
+	b2cCode: number;
 	inStock: boolean;
 	subBrand: string;
 }

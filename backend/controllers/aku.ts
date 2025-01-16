@@ -82,8 +82,10 @@ router.get("/shopping-cart", getUser, async (req: Request, res: Response) => {
 					warranty: item.warranty,
 					dimensions: item.dimensions,
 					code: item.code,
+					b2cCode: item.b2cCode,
 					inStock: item.inStock,
-					subBrand: item.subBrand
+					subBrand: item.subBrand,
+					b2cPrice: item.b2cPrice
 				});
 			}
 			return acc;

@@ -36,16 +36,8 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
 		}
 
 		onCheckoutReady(false);
-	}, [
-		name,
-		surname,
-		street,
-		city,
-		zipCode,
-		phone,
-		onCheckoutReady,
-		onCheckoutChange
-	]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [name, surname, street, city, zipCode, phone]);
 
 	return (
 		<div className="checkout-form">
