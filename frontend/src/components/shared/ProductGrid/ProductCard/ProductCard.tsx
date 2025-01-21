@@ -110,11 +110,17 @@ const ProductCard: FC<ProductCardProps> = ({
 				<hr />
 				<h3>
 					{product.name.includes("99")
-						? product.name.replace("99", "1")
-						: product.name.replace(/\b0+(\d+Ah)/, "$1")}
+						? `${!user ? product.b2cCode : product.code} ${product.name.replace(
+								"99",
+								"1"
+						  )}`
+						: `${!user ? product.b2cCode : product.code} ${product.name.replace(
+								/\b0+(\d+Ah)/,
+								"$1"
+						  )}`}
 				</h3>
 			</div>
-			<div>
+			<div className="product-footer">
 				<b>{user ? product.price.toFixed(2) : productPrice.toFixed(2)}KM</b>
 				<button
 					onClick={user ? addToCartHandler : discountHandler}

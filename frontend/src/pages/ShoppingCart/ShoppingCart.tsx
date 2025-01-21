@@ -77,7 +77,7 @@ const ShoppingCart: FC = () => {
 					product_name: product.name,
 					quantity: product.count,
 					price: product.b2cPrice,
-					code: product.b2cCode !== 0 ? product.b2cCode : product.code,
+					code: product.b2cCode,
 					returning_product: product.returningProduct || null
 				})),
 				total_price: sum,
