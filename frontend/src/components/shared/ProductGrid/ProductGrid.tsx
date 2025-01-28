@@ -7,6 +7,10 @@ import {
 	CartContext,
 	CartContextType
 } from "../../../util/context/CartContext";
+import {
+	UserContext,
+	UserContextType
+} from "../../../util/context/UserContext";
 
 interface ProductGridProps {
 	products: Array<ShoppingCartItem>;
@@ -20,6 +24,8 @@ const ProductGrid: FC<ProductGridProps> = ({ products }) => {
 	const [discountIsActive, setDiscountIsActive] = useState<boolean>(false);
 
 	const { addToCart } = useContext<CartContextType>(CartContext);
+
+	const { user } = useContext<UserContextType>(UserContext);
 
 	useEffect(() => {
 		if (isModalOpen) {
@@ -90,14 +96,18 @@ const ProductGrid: FC<ProductGridProps> = ({ products }) => {
 
 	return (
 		<div className="product-grid">
-			{products.map((product) => (
-				<ProductCard
-					product={product}
-					key={product.id}
-					onModalOpen={modalOpenHandler}
-					onMakeDiscounted={discountActivationHandler}
-				/>
-			))}
+			{products.map((product) => {
+				if (user || (!user && product.b2cCode !== 0)) {
+					return (
+						<ProductCard
+							product={product}
+							key={product.id}
+							onModalOpen={modalOpenHandler}
+							onMakeDiscounted={discountActivationHandler}
+						/>
+					);
+				}
+			})}
 			{isModalOpen && (
 				<DiscountForm
 					onModalClick={() => setIsModalOpen(false)}
