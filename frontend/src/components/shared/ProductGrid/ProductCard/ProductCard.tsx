@@ -120,12 +120,18 @@ const ProductCard: FC<ProductCardProps> = ({
 						  )}`}
 				</h3>
 			</div>
+			<div>
+				<p>Dimenzije: {product.dimensions}</p>
+				<p>Garancija: {product.warranty} mjeseci</p>
+			</div>
 			<div className="product-footer">
 				<b>{user ? product.price.toFixed(2) : productPrice.toFixed(2)}KM</b>
 				<button
 					onClick={user ? addToCartHandler : discountHandler}
 					disabled={clicked}
-					className={`${clicked && "clicked"} add-to-cart-button`}
+					className={`${clicked && "clicked"} add-to-cart-button  ${
+						!product.inStock && "add-to-cart-button-disabled"
+					}`}
 				>
 					{clicked ? <CircularProgress size="1em" /> : "Dodaj u korpu"}
 				</button>

@@ -10,6 +10,8 @@
 	margin: 2rem 0;
 	position: relative;
 
+	pointer-events: none;
+
 	text-decoration: none;
 	color: #103178;
 
@@ -72,4 +74,9 @@
 
 .add-to-cart-button {
 	height: 3em;
+	pointer-events: auto;
+}
+
+.add-to-cart-button-disabled {
+	pointer-events: none;
 }

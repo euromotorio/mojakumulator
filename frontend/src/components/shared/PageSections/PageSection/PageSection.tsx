@@ -11,7 +11,7 @@ const PageSection: FC<PageSectionProps> = ({ data }) => {
 	return (
 		<div className="sub-brand-container">
 			<div className="aligned-content">
-				<h1 className="sub-brand-title">{data.subBrand}</h1>
+				<h1 className="sub-brand-title">{data.subBrand.substring(2)}</h1>
 				<ProductGrid products={data.akus} />
 			</div>
 		</div>
