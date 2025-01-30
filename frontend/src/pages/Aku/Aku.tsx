@@ -154,8 +154,8 @@ const Aku: FC = () => {
 						{aku.dimensions}
 					</h3>
 					<h3>
-						<b>Garancija: </b>
-						{aku.warranty} mjeseca
+						<b>Garancija: </b> {aku.warranty}{" "}
+						{aku.warranty === 24 ? "mjeseca" : "mjeseci"}
 					</h3>
 				</div>
 				<div className="product-price">

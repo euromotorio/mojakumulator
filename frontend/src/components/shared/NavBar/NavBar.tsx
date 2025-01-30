@@ -62,7 +62,7 @@ const NavBar: FC = () => {
 				/>
 			)}
 			<Link
-				to={`/${!user && "?b2c=true"}`}
+				to={`/${!user ? "?b2c=true" : ""}`}
 				className="navbar-link homepage-link"
 			>
 				MojAkumulator
