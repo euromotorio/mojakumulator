@@ -21,7 +21,7 @@ const HomeItem: FC<HomeItemProps> = ({ aku }) => {
 			</div>
 			<div>
 				<p>Dimenzije: {aku.dimensions}</p>
-				<p>Garancija: {aku.warranty} mjeseci</p>
+				<p>Garancija: {aku.warranty} mjeseca</p>
 			</div>
 		</div>
 	);

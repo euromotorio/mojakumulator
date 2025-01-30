@@ -155,7 +155,7 @@ const Aku: FC = () => {
 					</h3>
 					<h3>
 						<b>Garancija: </b>
-						{aku.warranty} mjeseci
+						{aku.warranty} mjeseca
 					</h3>
 				</div>
 				<div className="product-price">

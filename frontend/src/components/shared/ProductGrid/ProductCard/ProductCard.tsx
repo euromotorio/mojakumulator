@@ -122,7 +122,7 @@ const ProductCard: FC<ProductCardProps> = ({
 			</div>
 			<div>
 				<p>Dimenzije: {product.dimensions}</p>
-				<p>Garancija: {product.warranty} mjeseci</p>
+				<p>Garancija: {product.warranty} mjeseca</p>
 			</div>
 			<div className="product-footer">
 				<b>{user ? product.price.toFixed(2) : productPrice.toFixed(2)}KM</b>
