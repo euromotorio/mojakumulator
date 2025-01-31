@@ -59,7 +59,7 @@ const ProductSummary: FC<ProductSummaryProps> = ({
 			)}
 			<div className="order-button-container">
 				<p className="sum">
-					Gotovina: {cartSum ? cartSum.toFixed(2) : (0).toFixed(2)}KM
+					Ukupno: {cartSum ? cartSum.toFixed(2) : (0).toFixed(2)}KM
 				</p>
 				<button
 					disabled={(!user && !cartReady) || cartSum === 0}
