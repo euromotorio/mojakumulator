@@ -160,7 +160,7 @@ const CartItem: FC<CartItemProps> = ({
 						<img src={product.imgUrl} width="150px" className="product-image" />
 					</div>
 					<div className="flex-item product-info">
-						<b>
+						<b className="product-name">
 							{product.name.includes("99")
 								? product.name.replace("99", "1")
 								: product.name.replace(/\b0+(\d+Ah)/, "$1")}
