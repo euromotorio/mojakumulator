@@ -19,7 +19,7 @@ const ShoppingCart: FC = () => {
 
 	const { user } = useContext<UserContextType>(UserContext);
 	const { cartCount, removeFromCart } =
-		useContext<CartContextType>(CartContext);
+		useContext<CartContextType>(CartContext); 
 
 	useEffect(() => {
 		const fetchCart = async () => {

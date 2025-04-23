@@ -32,7 +32,14 @@ const ProductSummary: FC<ProductSummaryProps> = ({
 	}, [cart]);
 
 	const orderHandler = async () => {
-		await onOrder(cartSum);
+		if (!cart) return;
+
+		const total = cart.products.reduce(
+			(sum, product) => sum + (user ? Number(product.price) : Number(product.b2cPrice)) * (product.count || 1),
+			0
+		);
+	
+		await onOrder(total);
 		setCartSum(0);
 	};
 
