@@ -57,6 +57,7 @@ router.post(
 				zipCode: string;
 				city: string;
 				phone: number;
+				email: string;
 			}
 		>,
 		res: Response
@@ -75,7 +76,8 @@ router.post(
 				},
 				access: "user",
 				shoppingCart: [],
-				phone: req.body.phone
+				phone: req.body.phone,
+				email: req.body.email
 			});
 
 			res.status(200).json(newUser);
@@ -91,7 +93,8 @@ router.get("/address", getUser, (req: Request, res: Response) => {
 	res.status(200).json({
 		shippingName: user.fullName,
 		address: user.address,
-		phone: user.phone
+		phone: user.phone,
+		email: user.email
 	});
 });
 

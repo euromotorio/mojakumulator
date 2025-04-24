@@ -19,7 +19,7 @@ const ShoppingCart: FC = () => {
 
 	const { user } = useContext<UserContextType>(UserContext);
 	const { cartCount, removeFromCart } =
-		useContext<CartContextType>(CartContext); 
+		useContext<CartContextType>(CartContext);
 
 	useEffect(() => {
 		const fetchCart = async () => {
@@ -86,8 +86,28 @@ const ShoppingCart: FC = () => {
 				address: checkoutDataB2C!.street,
 				city: checkoutDataB2C!.city,
 				zip: checkoutDataB2C!.zipCode,
-				phone: checkoutDataB2C!.phone
+				phone: checkoutDataB2C!.phone,
+				email: checkoutDataB2C!.email
 			};
+
+			const customerTemplateParams = {
+				orders: products?.products.map((product) => ({
+					name: product.name,
+					units: product.count,
+					price: product.price
+				})),
+				total: sum,
+				email: checkoutDataB2C!.email
+			};
+
+			emailjs.send(
+				emailjsIds.serviceId,
+				emailjsIds.customerTemplateId,
+				customerTemplateParams,
+				{
+					publicKey: emailjsIds.publicKey
+				}
+			);
 
 			emailjs
 				.send(emailjsIds.serviceId, emailjsIds.templateId, templateParams, {
@@ -112,7 +132,8 @@ const ShoppingCart: FC = () => {
 				city: "",
 				phone: "",
 				street: "",
-				zipCode: ""
+				zipCode: "",
+				email: ""
 			});
 
 			removeFromCart(cartCount);
@@ -144,8 +165,28 @@ const ShoppingCart: FC = () => {
 			address: checkoutData.address.street,
 			city: checkoutData.address.city,
 			zip: checkoutData.address.zipCode,
-			phone: checkoutData.phone
+			phone: checkoutData.phone,
+			email: checkoutData.email
 		};
+
+		const customerTemplateParams = {
+			orders: products?.products.map((product) => ({
+				name: product.name,
+				units: product.count,
+				price: product.price
+			})),
+			total: sum,
+			email: checkoutData.email
+		};
+
+		emailjs.send(
+			emailjsIds.serviceId,
+			emailjsIds.customerTemplateId,
+			customerTemplateParams,
+			{
+				publicKey: emailjsIds.publicKey
+			}
+		);
 
 		emailjs
 			.send(emailjsIds.serviceId, emailjsIds.templateId, templateParams, {

@@ -31,6 +31,7 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 	const [shippingZipCode, setShippingZipCode] = useState<string>();
 	const [shippingCity, setShippingCity] = useState<string>();
 	const [shippingContactPhone, setShippingContactPhone] = useState<string>();
+	const [userEmail, setUserEmail] = useState<string>();
 
 	const saveUserHandler = async (event: FormEvent) => {
 		event.preventDefault();
@@ -45,7 +46,8 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 				street: shippingAddress,
 				zipCode: shippingZipCode,
 				city: shippingCity,
-				phone: shippingContactPhone
+				phone: shippingContactPhone,
+				email: userEmail
 			}),
 			headers: {
 				"Content-Type": "application/json",
@@ -100,6 +102,15 @@ const NewUser: FC<NewUserProps> = ({ onClickModal, onAddUser }) => {
 					value={shippingName}
 					onChange={(event: ChangeEvent<HTMLInputElement>) =>
 						setShippingName(event.target.value)
+					}
+				/>
+				<TextField
+					label="Email"
+					required
+					type="email"
+					value={userEmail}
+					onChange={(event: ChangeEvent<HTMLInputElement>) =>
+						setUserEmail(event.target.value)
 					}
 				/>
 				<TextField

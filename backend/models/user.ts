@@ -61,6 +61,11 @@ const userSchema = new mongoose.Schema<UserInterface>({
 		type: Number,
 		required: true,
 		trim: true
+	},
+	email: {
+		type: String,
+		required: false,
+		trim: true
 	}
 });
 

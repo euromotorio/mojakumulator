@@ -34,6 +34,7 @@ export interface User {
 	fullName: string;
 	address: Address;
 	phone: number;
+	email: string;
 }
 
 export interface CartItem extends Aku {

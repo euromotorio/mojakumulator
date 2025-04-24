@@ -10,6 +10,7 @@ export interface CheckoutData {
 	city: string;
 	zipCode: string;
 	phone: string;
+	email: string;
 }
 
 interface CheckoutFormProps {
@@ -27,17 +28,18 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
 	const [city, setCity] = useState<string>("");
 	const [zipCode, setZipCode] = useState<string>("");
 	const [phone, setPhone] = useState<string>("");
+	const [email, setEmail] = useState<string>("");
 
 	useEffect(() => {
-		onCheckoutChange({ name, surname, street, city, zipCode, phone });
+		onCheckoutChange({ name, surname, street, city, zipCode, phone, email });
 
-		if (name && surname && street && city && zipCode && phone) {
+		if (name && surname && street && city && zipCode && phone && email) {
 			return onCheckoutReady(true);
 		}
 
 		onCheckoutReady(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [name, surname, street, city, zipCode, phone]);
+	}, [name, surname, street, city, zipCode, phone, email]);
 
 	return (
 		<div className="checkout-form">
@@ -61,6 +63,15 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
 						}
 					/>
 				</div>
+				<TextField
+					label="Email"
+					required
+					type="email"
+					value={email}
+					onChange={(event: ChangeEvent<HTMLInputElement>) =>
+						setEmail(event.target.value)
+					}
+				/>
 				<div>
 					<TextField
 						label="Ulica"
