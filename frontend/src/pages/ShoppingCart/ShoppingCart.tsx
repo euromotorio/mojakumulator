@@ -21,49 +21,52 @@ const ShoppingCart: FC = () => {
 	const { cartCount, removeFromCart } =
 		useContext<CartContextType>(CartContext);
 
-	useEffect(() => {
-		const fetchCart = async () => {
-			if (!user) {
-				const storedCart = localStorage.getItem("mojakumulator-cart");
-				if (!storedCart) {
-					const initialCart = { products: [], sum: 0 };
-					localStorage.setItem(
-						"mojakumulator-cart",
-						JSON.stringify(initialCart)
-					);
-					setProducts(initialCart);
-					return;
-				}
-
-				const cart = JSON.parse(storedCart);
-				setTimeout(() => {
-					setProducts(cart);
-				}, 1000);
-
+	const fetchCart = async () => {
+		if (!user) {
+			const storedCart = localStorage.getItem("mojakumulator-cart");
+			if (!storedCart) {
+				const initialCart = { products: [], sum: 0 };
+				localStorage.setItem("mojakumulator-cart", JSON.stringify(initialCart));
+				setProducts(initialCart);
 				return;
 			}
 
-			const userToken = JSON.parse(localStorage.getItem("user")!).token;
-
-			const response = await fetch(`${baseApiUrl}/api/akus/shopping-cart`, {
-				headers: {
-					Authorization: `bearer ${userToken}`
-				}
-			});
-
-			if (!response.ok) {
-				return setProducts({ products: [], sum: 0 });
-			}
-
-			const jsonData = await response.json();
-
+			const cart = JSON.parse(storedCart);
 			setTimeout(() => {
-				setProducts(jsonData);
+				setProducts(cart);
 			}, 1000);
-		};
 
+			return;
+		}
+
+		const userToken = JSON.parse(localStorage.getItem("user")!).token;
+
+		const response = await fetch(`${baseApiUrl}/api/akus/shopping-cart`, {
+			headers: {
+				Authorization: `bearer ${userToken}`
+			}
+		});
+
+		if (!response.ok) {
+			return setProducts({ products: [], sum: 0 });
+		}
+
+		const jsonData = await response.json();
+
+		console.log(jsonData);
+
+		setTimeout(() => {
+			setProducts(jsonData);
+		}, 1000);
+	};
+
+	useEffect(() => {
 		fetchCart();
-	}, [user]);
+	}, [user, cartCount]);
+
+	// useEffect(() => {
+	// 	console.log(products?.products);
+	// });
 
 	const checkoutReadyHandler = (value: boolean) => {
 		setCheckoutReady(value);
@@ -94,7 +97,7 @@ const ShoppingCart: FC = () => {
 				orders: products?.products.map((product) => ({
 					name: product.name,
 					units: product.count,
-					price: product.price * product.count
+					price: String(Number(product.b2cPrice) * Number(product.count))
 				})),
 				total: sum,
 				email: checkoutDataB2C!.email
@@ -173,7 +176,7 @@ const ShoppingCart: FC = () => {
 			orders: products?.products.map((product) => ({
 				name: product.name,
 				units: product.count,
-				price: product.price * product.count
+				price: String(Number(product.price) * Number(product.count))
 			})),
 			total: sum,
 			email: checkoutData.email
