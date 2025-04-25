@@ -97,7 +97,8 @@ const ShoppingCart: FC = () => {
 				orders: products?.products.map((product) => ({
 					name: product.name,
 					units: product.count,
-					price: String(Number(product.b2cPrice) * Number(product.count))
+					price: String(Number(product.b2cPrice) * Number(product.count)),
+					unit_price: product.b2cPrice
 				})),
 				total: sum,
 				email: checkoutDataB2C!.email
@@ -176,7 +177,8 @@ const ShoppingCart: FC = () => {
 			orders: products?.products.map((product) => ({
 				name: product.name,
 				units: product.count,
-				price: String(Number(product.price) * Number(product.count))
+				price: String(Number(product.price) * Number(product.count)),
+				unit_price: product.price
 			})),
 			total: sum,
 			email: checkoutData.email
