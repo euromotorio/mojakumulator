@@ -51,7 +51,7 @@ const SideBar: FC<SideBarProps> = ({ opened, onClickOutside }) => {
 					location={`/urban${!user ? "?b2c=true" : ""}`}
 					text="Urban"
 				/>
-				<CustomLink location={`/klas${!user ? "?b2c=true" : ""}`} text="Klas" />
+				{/* <CustomLink location={`/klas${!user ? "?b2c=true" : ""}`} text="Klas" /> */}
 				<CustomLink
 					location={`/exide${!user ? "?b2c=true" : ""}`}
 					text="Exide"
@@ -60,10 +60,10 @@ const SideBar: FC<SideBarProps> = ({ opened, onClickOutside }) => {
 					location={`/rombat${!user ? "?b2c=true" : ""}`}
 					text="Rombat"
 				/>
-				<CustomLink
+				{/* <CustomLink
 					location={`/varta${!user ? "?b2c=true" : ""}`}
 					text="Varta"
-				/>
+				/> */}
 			</div>
 			<div className="sidebar-footer">
 				{user?.access === "admin" && (

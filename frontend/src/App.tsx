@@ -28,10 +28,10 @@ import {
 } from "./util/context/NotificationContext";
 import Aku from "./pages/Aku/Aku";
 import { singleAkuLoader } from "./util/loaders/singleAkuLoader";
-import Varta from "./pages/Varta/Varta";
+// import Varta from "./pages/Varta/Varta";
 import Rombat from "./pages/Rombat/Rombat";
 // import Home from "./pages/Home/Home";
-import Klas from "./pages/Klas/Klas";
+// import Klas from "./pages/Klas/Klas";
 import { CartContext } from "./util/context/CartContext";
 import { baseApiUrl } from "./util/config/baseApiUrl";
 // import Klas from "./pages/Klas/Klas";
@@ -137,9 +137,9 @@ const App: FC = () => {
 			<Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
 				{/* <Route path="/" element={<Home />} loader={akuLoader} /> */}
 				<Route path="urban" element={<Urban />} loader={akuLoader} />
-				<Route path="klas" element={<Klas />} loader={akuLoader} />
+				{/* <Route path="klas" element={<Klas />} loader={akuLoader} /> */}
 				<Route path="exide" element={<Exide />} loader={akuLoader} />
-				<Route path="varta" element={<Varta />} loader={akuLoader} />
+				{/* <Route path="varta" element={<Varta />} loader={akuLoader} /> */}
 				<Route path="rombat" element={<Rombat />} loader={akuLoader} />
 				<Route path="proizvodi">
 					<Route path=":productId" element={<Aku />} loader={singleAkuLoader} />
